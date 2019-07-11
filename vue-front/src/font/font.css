@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'HACKED';  /*重命名字体名*/
+  src: url('HACKED.ttf'); /*引入字体*/
+  font-weight: normal;
+  font-style: normal;
+}
