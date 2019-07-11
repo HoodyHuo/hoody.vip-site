@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-    <el-input v-model="blog.title" />
-    <input v-model="blog.title" type="text"><span>创建时间：{{ parseTime(blog.createTime) }}</span>
+    <el-row :gutter="25">
+      <el-input v-model="blog.title" class="title" placeholder="请输入标题" />
+      <el-tag type="info">Create:{{ parseTime(blog.createTime) }}</el-tag>
+      <el-tag type="warning">Modify:{{ parseTime(blog.modifyTime) }}</el-tag>
+    </el-row>
     <mavon-editor
       ref="md"
       v-model="blog.content"
@@ -115,6 +118,11 @@ export default {
   .editor{
     /*background-color: #29560d;*/
     height:750px;
+  }
+  .title{
+    min-width: 100px;
+    max-width: 300px;
+    padding: 15px;
   }
   .button{
 
