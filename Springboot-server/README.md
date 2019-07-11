@@ -9,7 +9,7 @@
 >-  JPA + MySQL 数据处理
 >-  Shiro 权限控制 
 
-## Groovy
+## Groovy 
 
 如果通过IDE进行编辑,需要配置源码目录包含`/src/main/groovy` 目录
 
