@@ -5,16 +5,16 @@ if "%version%"==""   goto  missArg
 
 
 
-echo =--------------¿ªÊ¼´ò°üjar Ìø¹ı²âÊÔ-----------------
+echo =--------------å¼€å§‹æ‰“åŒ…jar è·³è¿‡æµ‹è¯•-----------------
 call mvnw package -DskipTests
 
-echo =--------------¿ªÊ¼ÖÆ×÷docker ¾µÏñ  vip-hoody-site-api:%version%--------------
+echo =--------------å¼€å§‹åˆ¶ä½œdocker é•œåƒ  vip-hoody-site-api:%version%--------------
 
 call docker build -t vip-hoody-site-api:%version% .
 goto end
 
 :missArg
-echo ÇëÔÚ²ÎÊı¼ÓÉÏ°æ±¾ºÅ eg: build-docker-image.bat 1.3
+echo è¯·åœ¨å‚æ•°åŠ ä¸Šç‰ˆæœ¬å· eg: build-docker-image.bat 1.3
 goto end
 
 :end
