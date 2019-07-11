@@ -83,10 +83,7 @@ export const constantRoutes = [
       }
     ]
     // modules.constantRoutes,
-  }].concat(modulesConstantRoutes).concat([
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-])
+  }].concat(modulesConstantRoutes)
 
 export const asyncRoutes = [
   {
@@ -112,11 +109,14 @@ export const asyncRoutes = [
       }
     ]
   }
-].concat(modulesAsyncRoutes) /** modules routes */
+  /** modules routes */
+].concat(modulesAsyncRoutes).concat([
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+])
 
 const createRouter = () => new Router({
   base: process.env.VUE_APP_BASE, // require service support
-
   mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
