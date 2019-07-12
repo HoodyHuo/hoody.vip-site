@@ -17,7 +17,6 @@ import javax.security.auth.login.AccountException
 
 /**
  * @auth Hoody* 自定义shiro 权限验证对象
- * //TODO 未加入 密码加密
  */
 class CustomRealm extends AuthorizingRealm {
 

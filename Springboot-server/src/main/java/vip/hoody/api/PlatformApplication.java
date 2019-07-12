@@ -1,6 +1,5 @@
 package vip.hoody.api;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -27,7 +26,6 @@ public class PlatformApplication extends SpringBootServletInitializer {
         return application.sources(PlatformApplication.class);
     }
     public static void main(String[] args) {
-
         SpringApplication.run(PlatformApplication.class, args);
     }
 
