@@ -53,6 +53,14 @@ module.exports = {
           // pathRewrite: {'^/api': '/'} 重写之后url为 http://192.168.1.16:8085/xxxx
           // pathRewrite: {'^/api': '/api'} 重写之后url为 http://192.168.1.16:8085/api/xxxx
         }
+      },
+      '/storage': {
+        target: `http://127.0.0.1:8080/storage/`,
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/storage': ''
+        }
       }
     },
     after: require('./mock/mock-server.js')
@@ -68,8 +76,8 @@ module.exports = {
     }
   },
   chainWebpack(config) {
-    config.plugins.delete('preload') // TODO: need test
-    config.plugins.delete('prefetch') // TODO: need test
+    config.plugins.delete('preload') //
+    config.plugins.delete('prefetch') //
     if (process.env.NODE_ENV === 'production') {
       // 打包模式加入gzip插件
       config.plugin('compression')
