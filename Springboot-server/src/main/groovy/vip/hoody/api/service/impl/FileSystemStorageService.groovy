@@ -18,34 +18,38 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.stream.Stream
 
-@Profile(["dev", "prod","ecs"])
+@Profile(["dev", "prod", "ecs"])
 @Service
 class FileSystemStorageService implements StorageService {
 
-    private Path rootLocation;
 
-    @Autowired
-    public FileSystemStorageService(@Value('${platform.uploadDir}') String uploadDir) {
-        println("uploadDir:${uploadDir}")
-        this.rootLocation = Paths.get(uploadDir)
-    }
+    @Value('${platform.uploadDir}')
+    private String uploadDir
+
 
     @Override
     void init() {
         try {
-            Files.createDirectory(rootLocation);
+            Files.createDirectory(Paths.get(uploadDir))
         } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }
     }
 
     @Override
-    void store(MultipartFile file) {
+    String store(MultipartFile file, String path, String suffix) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
+            Path targetDir = Paths.get(uploadDir + path)
+            if (!targetDir.toFile().exists()) {
+                Files.createDirectory(targetDir)
+            }
+            String fileName = UUID.randomUUID().toString() + file.getOriginalFilename() + (suffix == null ? "" : suffix)
+            Path physicalPath = Paths.get(uploadDir + path).resolve(fileName)
+            Files.copy(file.getInputStream(), physicalPath)
+            return "/storage${path}/${fileName}"
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }

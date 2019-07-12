@@ -7,6 +7,7 @@ import org.apache.shiro.authz.annotation.RequiresGuest
 import org.apache.shiro.authz.annotation.RequiresPermissions
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,12 +21,17 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import springfox.documentation.spring.web.json.Json
 import vip.hoody.api.domain.Blog
+import vip.hoody.api.exception.StorageException
 import vip.hoody.api.service.BlogService
 import vip.hoody.api.service.StorageService
+import vip.hoody.api.service.impl.FileSystemStorageService
 import vip.hoody.api.util.ResponseData
 import vip.hoody.api.util.TimeUtil
 
 import javax.servlet.http.HttpServletRequest
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 
 @RestController
 @RequestMapping("/blog")
@@ -33,13 +39,6 @@ class BlogController {
 
     @Autowired
     BlogService blogService
-
-    private StorageService storageService;
-
-    @Autowired
-    public FileUploadController(StorageService storageService) {
-        this.storageService = storageService;
-    }
 
     /**
      * 获取博客列表
@@ -117,8 +116,7 @@ class BlogController {
         blog.title = dataMap?.title
         blog.content = dataMap?.content
         blog.createTime = TimeUtil.parseJsTimeStrToDate(dataMap?.createTime)
-        blog.modifyTime =TimeUtil.parseJsTimeStrToDate(dataMap?.modifyTime)
-
+        blog.modifyTime = TimeUtil.parseJsTimeStrToDate(dataMap?.modifyTime)
         blogService.save(blog)
         return new ResponseData(data: blog.id)
     }
@@ -131,11 +129,15 @@ class BlogController {
      */
     @RequiresPermissions("blog:create")
     @PostMapping("image/add")
-    ResponseData addImage(
-            @RequestParam("files") MultipartFile[] files,
-            HttpServletRequest request) {
-//        storageService.store(file);
-        println(files)
+    ResponseData upLoadImages(
+            MultipartFile[] files
+    ) {
+        Map imgUrl = new HashMap()
+        files.each { MultipartFile file ->
+            String path = blogService.storeImage(file)
+            imgUrl.put(file.originalFilename, path)
+        }
+        return new ResponseData(data: imgUrl)
     }
 
 }

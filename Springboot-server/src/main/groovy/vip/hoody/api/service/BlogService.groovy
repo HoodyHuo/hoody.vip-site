@@ -6,11 +6,16 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 import vip.hoody.api.domain.Blog
 import vip.hoody.api.repository.BlogRepository
+import vip.hoody.api.util.MimeTypeUtil
 
 @Service
 class BlogService {
+
+    @Autowired
+    StorageService storageService
 
     @Autowired
     BlogRepository blogRepository
@@ -46,5 +51,17 @@ class BlogService {
             }
         }
         return blogRepository.save(blog)
+    }
+
+    /**
+     *  保存图片文件
+     * @param imageFile
+     * @return String 图片的url地址
+     */
+    String storeImage(MultipartFile file) {
+        String fileName = storageService.store(file,
+                '/blog',
+                MimeTypeUtil.getSuffixByMimeType(file.getContentType()))
+        return fileName
     }
 }

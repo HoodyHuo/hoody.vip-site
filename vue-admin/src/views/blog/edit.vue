@@ -9,6 +9,7 @@
       ref="md"
       v-model="blog.content"
       class="editor"
+      @save="save"
       @imgAdd="$imgAdd"
       @imgDel="$imgDel"
     />
@@ -20,7 +21,6 @@
 import { addImage, save, getBlog } from '../../api/blog'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-import { Message } from 'element-ui'
 import { isNullObj, parseTime } from '../../utils'
 
 /** 增加代码高亮 */
@@ -30,7 +30,9 @@ mavonEditor.getMarkdownIt({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(lang, str).value
-      } catch (e) { debugger }
+      } catch (e) {
+        debugger
+      }
     }
     return ''
   }
@@ -41,15 +43,13 @@ export default {
   components: {
     mavonEditor
   },
-  state: {
-
-  },
+  state: {},
   data() {
     return {
       /** 待上传图片暂存 */
       imageList: {},
       blog: {
-        content: null,
+        content: '',
         title: null,
         id: null,
         createTime: null,
@@ -71,14 +71,13 @@ export default {
   methods: {
     parseTime: parseTime,
     save: function() {
+      if (!this.checkParams()) {
+        return
+      }
       this.updateImage()
       save(this.blog).then((res) => {
         this.blog.id = res.data
-        Message({
-          message: '保存成功',
-          type: 'success',
-          duration: 2 * 1000
-        })
+        this.$message.success('保存成功')
       })
     },
     /** 图片上传 */
@@ -88,6 +87,18 @@ export default {
     $imgDel(pos) {
       delete this.imageList[pos[0]]
     },
+    /** 保存前检查属性是否完整*/
+    checkParams() {
+      if (this.blog.title === null || this.blog.title.trim() === '') {
+        this.$message.error('请输入标题!')
+        return false
+      }
+      if (this.blog.content === null) {
+        this.$message.error('正文不能是空白')
+        return false
+      }
+      return true
+    },
     updateImage() {
       if (isNullObj(this.imageList)) {
         return
@@ -95,18 +106,18 @@ export default {
 
       var formdata = new FormData()
       for (const _img in this.imageList) {
-        formdata.append(_img, this.imageList[_img])
+        formdata.append('files', this.imageList[_img], _img)
       }
-      addImage(formdata).then((res) => {
+      addImage(formdata).then(({ data }) => {
         /**
-         * 例如：返回数据为 res = [[pos, url], [pos, url]...]
-         * pos 为原图片标志（0）
-         * url 为上传后图片的url地址
-         */
+           * 例如：返回数据为 res = [[pos, url], [pos, url]...]
+           * pos 为原图片标志（0）
+           * url 为上传后图片的url地址
+           */
         // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)，并移除
-        for (const img in res) {
-          this.$refs.md.$img2Url(img[0], img[1])
-          this.$imgDel(img[0])
+        for (const index in data) {
+          this.$refs.md.$img2Url(index, data[index])
+          this.$imgDel(index)
         }
       })
     }
@@ -115,16 +126,18 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .editor{
+  .editor {
     /*background-color: #29560d;*/
-    height:750px;
+    height: 750px;
   }
-  .title{
+
+  .title {
     min-width: 100px;
     max-width: 300px;
     padding: 15px;
   }
-  .button{
+
+  .button {
 
   }
 

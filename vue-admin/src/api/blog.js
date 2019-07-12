@@ -32,7 +32,7 @@ export function addImage(data) {
     url: 'blog/image/add',
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data' },
-    files: data
+    data: data
   })
 }
 
