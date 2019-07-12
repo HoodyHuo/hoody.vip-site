@@ -14,6 +14,8 @@
 import IntroBanner from './components/banner'
 import Footer from '@/layout/components/Footer'
 const backgroundImage = 'https://images4.alphacoders.com/891/891151.jpg'
+
+//TODO 做首页兼容
 export default {
   name: 'Intro',
   components: {
