@@ -14,8 +14,8 @@ import javax.validation.ConstraintViolationException
 
 @RestControllerAdvice
 @Order(3)
-class GlobaExceptionHandler {
-    private static final Logger log = LoggerFactory.getLogger(GlobaExceptionHandler.class)
+class GlobalExceptionHandler {
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class)
     /**
      * 未知异常处理
      * @param request

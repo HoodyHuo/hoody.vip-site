@@ -110,9 +110,9 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", isLocke=" + isLocke +
+                ", username='" + username +
+//                ", password='" + password + '\'' +
+//                ", isLocke=" + isLocke +
                 '}';
     }
 }

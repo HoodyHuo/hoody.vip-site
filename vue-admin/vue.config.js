@@ -5,6 +5,7 @@ const defaultSettings = require('./src/settings.js')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
+
 const CompressionPlugin = require('compression-webpack-plugin')
 const name = defaultSettings.title || 'vue Admin Template' // page title
 // If your port is set to 80,
@@ -50,6 +51,14 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/storage': {
+        target: `http://127.0.0.1:8080/storage/`,
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/storage': ''
+        }
       }
     }
     // after: require('./mock/mock-server.js')
@@ -79,7 +88,8 @@ module.exports = {
             threshold: 10240,
             minRatio: 0.8,
             deleteOriginalAssets: false
-          }}))
+          }
+        }))
       // 分析插件
       config
         .plugin('webpack-bundle-analyzer')
