@@ -64,22 +64,13 @@ class AliyunEcsUtil {
      * @param sinceTime 信息的开始时间
      * @return
      */
-    HashMap getDashboardDataSinceLastTime(Long sinceTime) {
+    HashMap<DescribeInstancesResponse.Instance,HashMap> getDashboardDataSinceLastTime(Long sinceTime) {
         def data = new HashMap()
         try {
             DescribeInstancesResponse instancesResponse = this.getMyEcsInstances()
             instancesResponse.getInstances().each {
                 DescribeInstancesResponse.Instance instance ->
-                    data.put(instance.instanceName, [
-                            imageId:instance.imageId,
-                            zoneId:instance.zoneId,
-                            instanceType:instance.instanceType,
-                            status:instance.status,
-                            internetMaxBandwidthIn:instance.internetMaxBandwidthIn,
-                            internetMaxBandwidthOut:instance.internetMaxBandwidthOut,
-                            publicIpAddress:instance.publicIpAddress,
-                            items:this.getDescribeMetricLast(instance, sinceTime)
-                    ])
+                    data.put(instance, this.getDescribeMetricLast(instance, sinceTime))
             }
             return data
 
