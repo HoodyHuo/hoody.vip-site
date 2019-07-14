@@ -46,3 +46,7 @@ shiro:
 platform:
   logsPath: "./server/logs"
   uploadDir: "./server/uploadFile"
+  aliyun:
+    regionld: 'cn-hangzhou'
+    access-key: 'LTAIujE4iaUP6YV7'
+    access-key-secret: 'YOYp90U8dgvr4nHmqC7W5Cw4isnrSu'
