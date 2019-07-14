@@ -64,13 +64,22 @@ class AliyunEcsUtil {
      * @param sinceTime 信息的开始时间
      * @return
      */
-    HashMap getDashboardDataSinceLastTime(Date sinceTime) {
+    HashMap getDashboardDataSinceLastTime(Long sinceTime) {
         def data = new HashMap()
         try {
             DescribeInstancesResponse instancesResponse = this.getMyEcsInstances()
             instancesResponse.getInstances().each {
                 DescribeInstancesResponse.Instance instance ->
-                    data.put(instance, this.getDescribeMetricLast(instance, sinceTime))
+                    data.put(instance.instanceName, [
+                            imageId:instance.imageId,
+                            zoneId:instance.zoneId,
+                            instanceType:instance.instanceType,
+                            status:instance.status,
+                            internetMaxBandwidthIn:instance.internetMaxBandwidthIn,
+                            internetMaxBandwidthOut:instance.internetMaxBandwidthOut,
+                            publicIpAddress:instance.publicIpAddress,
+                            items:this.getDescribeMetricLast(instance, sinceTime)
+                    ])
             }
             return data
 
@@ -110,7 +119,7 @@ class AliyunEcsUtil {
     }
 
     /** 获取根据实例,对每一个可以查询的数据进行查询 */
-    private HashMap getDescribeMetricLast(DescribeInstancesResponse.Instance instance, Date sinceTime) {
+    private HashMap getDescribeMetricLast(DescribeInstancesResponse.Instance instance, Long sinceTime) {
 
         Map labelAndVal = new HashMap()
         List<DescribeMetricMeta> metricMetaList = this.getDescribeMetricMetaList()
@@ -130,7 +139,7 @@ class AliyunEcsUtil {
      * @param sinceTime
      * @return
      */
-    private String getDescribeLastData(DescribeInstancesResponse.Instance instance, String metricName, Date sinceTime) {
+    private String getDescribeLastData(DescribeInstancesResponse.Instance instance, String metricName, Long sinceTime) {
         DescribeMetricLastRequest request = new DescribeMetricLastRequest();
         request.setMetricName(metricName)
         request.setNamespace(this.namespace)
