@@ -2,8 +2,8 @@ package vip.hoody.api.util
 
 import com.aliyuncs.DefaultAcsClient
 import com.aliyuncs.IAcsClient
-import com.aliyuncs.cms.model.v20190101.DescribeMetricLastRequest
-import com.aliyuncs.cms.model.v20190101.DescribeMetricLastResponse
+import com.aliyuncs.cms.model.v20190101.DescribeMetricDataRequest
+import com.aliyuncs.cms.model.v20190101.DescribeMetricDataResponse
 import com.aliyuncs.ecs.model.v20140526.DescribeInstancesRequest
 import com.aliyuncs.ecs.model.v20140526.DescribeInstancesResponse
 import com.aliyuncs.profile.DefaultProfile
@@ -26,7 +26,7 @@ class AliyunEcsUtil {
     String regionld
 
     /** 统计间隔秒数 */
-    String period = '600'
+    Long period = 300
 
     String namespace = "acs_ecs_dashboard"
     String accessKey
@@ -62,15 +62,16 @@ class AliyunEcsUtil {
     /**
      * 获取名下所有ECS实例的监控信息
      * @param sinceTime 信息的开始时间
+     * @param endTime
      * @return
      */
-    HashMap<DescribeInstancesResponse.Instance,HashMap> getDashboardDataSinceLastTime(Long sinceTime) {
+    HashMap<DescribeInstancesResponse.Instance, HashMap> getAllInstancePeriodData(Long sinceTime, Long endTime) {
         def data = new HashMap()
         try {
             DescribeInstancesResponse instancesResponse = this.getMyEcsInstances()
             instancesResponse.getInstances().each {
                 DescribeInstancesResponse.Instance instance ->
-                    data.put(instance, this.getDescribeMetricLast(instance, sinceTime))
+                    data.put(instance, this.getDescribeMetricData(instance, sinceTime, endTime))
             }
             return data
 
@@ -78,6 +79,14 @@ class AliyunEcsUtil {
             throw new RuntimeException("ECS 监控信息获取发生异常:${e.getMessage()}", e)
         }
     }
+
+//    获取最近一次周期的数据
+    HashMap<DescribeInstancesResponse.Instance, HashMap> getLastPeriodData(){
+        Long now  = new Date().getTime()
+        Long onePeriodBefore = now - (this.period*1000)
+       return  this.getAllInstancePeriodData(onePeriodBefore,now)
+    }
+
 
     /** 获取当前 AccessKey 下的ECS实例信息 */
     private DescribeInstancesResponse getMyEcsInstances() {
@@ -94,23 +103,39 @@ class AliyunEcsUtil {
 
         List<DescribeMetricMeta> list = [
                 new DescribeMetricMeta("CPUUtilization", 'CPU百分比', "%"),
+                new DescribeMetricMeta("cpu_user", '当前用户CPU百分比', "%"),
+
+                new DescribeMetricMeta("memory_usedutilization", '内存使用率', "%"),
+                new DescribeMetricMeta("net_tcpconnection", 'TCP连接数', "个"),
+
+                new DescribeMetricMeta("networkin_rate", '网卡的上行带宽', "%"),
+                new DescribeMetricMeta("networkout_rate", '网卡的下行带宽', "%"),
+
                 new DescribeMetricMeta("InternetInRate", '公网流入带宽', "bit/s"),
-                new DescribeMetricMeta("IntranetInRate", '私网流入带宽', "bit/s"),
                 new DescribeMetricMeta("InternetOutRate", '公网流出带宽', "bit/s"),
+
+                new DescribeMetricMeta("IntranetInRate", '私网流入带宽', "bit/s"),
                 new DescribeMetricMeta("IntranetOutRate", '私网流出带宽', "bit/s"),
-                new DescribeMetricMeta("InternetOutRate_Percent", '公网流出带宽使用率', "%"),
-                new DescribeMetricMeta("DiskReadBPS", '系统磁盘总读BPS', "Bps"),
-                new DescribeMetricMeta("DiskWriteBPS", '系统磁盘总写BPS', "Bps"),
+
+
+                new DescribeMetricMeta("DiskWriteIOPS", '系统磁盘写IOPS', "Bps"),
                 new DescribeMetricMeta("DiskReadIOPS", '系统磁盘读IOPS', "Count/Second"),
+
                 new DescribeMetricMeta("VPC_PublicIP_InternetInRate", '专有网络公网流入带宽', "bit/s"),
                 new DescribeMetricMeta("VPC_PublicIP_InternetOutRate", '专有网络公网流出带宽', "bit/s"),
-                new DescribeMetricMeta("VPC_PublicIP_InternetOutRate_Percent", '专有网络公网流出带宽使用率', "%"),
+
+                new DescribeMetricMeta("diskusage_utilization", '磁盘使用率', "%"),
+                new DescribeMetricMeta("load_5m", '过去5分钟的系统平均负载', "%"),
+
+
         ]
         return list
     }
 
     /** 获取根据实例,对每一个可以查询的数据进行查询 */
-    private HashMap getDescribeMetricLast(DescribeInstancesResponse.Instance instance, Long sinceTime) {
+    private HashMap getDescribeMetricData(
+            DescribeInstancesResponse.Instance instance,
+            Long sinceTime, Long endTime) {
 
         Map labelAndVal = new HashMap()
         List<DescribeMetricMeta> metricMetaList = this.getDescribeMetricMetaList()
@@ -118,7 +143,7 @@ class AliyunEcsUtil {
             labelAndVal.put(metricMeta.metricName, [
                     description: metricMeta.description,
                     unit       : metricMeta.unit,
-                    metricData : this.getDescribeLastData(instance, metricMeta.metricName, sinceTime)
+                    metricData : this.getDescribeLastData(instance, metricMeta.metricName, sinceTime, endTime)
             ])
         }
         return labelAndVal
@@ -130,15 +155,19 @@ class AliyunEcsUtil {
      * @param sinceTime
      * @return
      */
-    private String getDescribeLastData(DescribeInstancesResponse.Instance instance, String metricName, Long sinceTime) {
-        DescribeMetricLastRequest request = new DescribeMetricLastRequest();
+    private String getDescribeLastData(
+            DescribeInstancesResponse.Instance instance, String metricName,
+            Long sinceTime, Long endTime) {
+        DescribeMetricDataRequest request = new DescribeMetricDataRequest();
         request.setMetricName(metricName)
         request.setNamespace(this.namespace)
-        request.setPeriod(this.period)
+        request.setPeriod(this.period.toString())
+        request.setStartTime(sinceTime.toString())
+        request.setEndTime(endTime.toString())
         request.setDimensions("[{instanceId:'${instance.instanceId}'}]")
 
-        DescribeMetricLastResponse response = client.getAcsResponse(request)
-        if (!response.success) {
+        DescribeMetricDataResponse response = client.getAcsResponse(request)
+        if (response.code != "200") {
             println("${metricName}: ${response.message}")
         }
         return response.datapoints

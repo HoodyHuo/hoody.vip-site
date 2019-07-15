@@ -19,10 +19,8 @@ class DashboardController {
     }
 
     @RequestMapping(value = "info/last", method = [RequestMethod.POST, RequestMethod.GET])
-    @Autowired
     ResponseData lastInfo() {
-        def data = aliyunService.getLast5MinData()
+        def data = aliyunService.getOneDayData()
         return new ResponseData(data: data)
     }
-
 }
