@@ -6,3 +6,10 @@ export function last5MinData() {
     method: 'post'
   })
 }
+
+export function lastDayData() {
+  return request({
+    url: '/dashboard/info/last',
+    method: 'post'
+  })
+}

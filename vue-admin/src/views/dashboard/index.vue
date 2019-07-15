@@ -1,32 +1,38 @@
 <template>
-  <div class="dashboard-container">
-    {{ ecsData }}
+  <div id="main" ref="main" :v-loading="isLoading" class="dashboard-container">
+    <ECSInstanceDashboard v-for="(val,key) in ecsData" :key="key" :name="key" :value="val" />
   </div>
 </template>
 <script>
-import { last5MinData } from '../../api/dashboard'
-
+import { lastDayData } from '../../api/dashboard'
+import ECSInstanceDashboard from './components/ECSInstanceDashboard'
 export default {
   name: 'Dashboard',
+  components: {
+    ECSInstanceDashboard
+  },
   data() {
     return {
-      message: 'hello',
-      ecsData: null
+      ecsData: null,
+      isLoading: false
     }
   },
   computed: {},
   mounted() {
-    this.init()
+    const loadingInstance = this.$loading({ target: this.$refs.main })
+    this.init(loadingInstance)
   },
   beforeDestroy: function() {
   },
   methods: {
-    init() {
-      last5MinData().then(({ data }) => {
+    init(loadingInstance) {
+      lastDayData().then(({ data }) => {
         this.ecsData = data
+        loadingInstance.close()
       })
     }
   }
+
 }
 </script>
 
