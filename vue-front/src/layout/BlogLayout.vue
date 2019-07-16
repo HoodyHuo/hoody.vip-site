@@ -68,6 +68,12 @@ export default {
   .blog-main {
   }
 
+  @media (min-width: 1441px) {
+    .blog-container {
+      Background-size: 100%;
+    }
+  }
+
   @media (max-width: 1440px) {
     .blog-main {
       padding: 5px;

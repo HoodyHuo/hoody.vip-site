@@ -21,7 +21,7 @@ export const asyncRoutes = {
         breadcrumb: true,
         roles: ['admin'],
         title: '博客列表',
-        icon: 'link'
+        icon: 'form'
       }
     },
     {
@@ -33,7 +33,7 @@ export const asyncRoutes = {
         breadcrumb: true,
         roles: ['admin'],
         title: '博客编辑',
-        icon: 'link'
+        icon: 'form'
       }
     },
     {
@@ -45,9 +45,18 @@ export const asyncRoutes = {
         breadcrumb: true,
         roles: ['admin'],
         title: '新建博客',
-        icon: 'link'
+        icon: 'form'
 
       }
+    },
+    {
+      path: 'blog-link',
+      children: [
+        {
+          path: process.env.VUE_APP_BLOG_URL,
+          meta: { title: 'Blog', icon: 'link' }
+        }
+      ]
     }
   ]
 }

@@ -3,25 +3,25 @@ import Layout from '@/layout'
 export const constantRoutes = {}
 
 export const asyncRoutes = {
-  path: '/websockekt',
+  path: '/dashboard',
   component: Layout,
-  redirect: '/websockekt/index',
-  name: 'Websockekt',
+  redirect: '/dashboard/index',
+  name: 'Dashboard',
   meta: {
     roles: ['admin'],
-    title: 'websockekt',
+    title: 'Dashboard',
     icon: 'pc'
   },
   children: [
     {
-      path: '/websockekt/index',
-      component: () => import('@/views/websocket/index'),
-      name: 'Websockekt',
+      path: '/dashboard/index',
+      component: () => import('@/views/dashboard/index'),
+      name: 'Dashboard',
       meta: {
         breadcrumb: false,
         roles: ['admin'],
-        title: 'Websockekt',
-        icon: 'user'
+        title: 'Dashboard',
+        icon: 'dashboard'
       }
     }
   ]

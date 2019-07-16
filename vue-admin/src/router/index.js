@@ -62,53 +62,54 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/index',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      path: 'index',
+      name: 'Index',
+      component: () => import('@/views/index'),
+      meta: { title: 'Index', icon: 'index' }
     }]
-  },
+  }
 
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-    // modules.constantRoutes,
-  }].concat(modulesConstantRoutes)
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Form',
+  //       component: () => import('@/views/form/index'),
+  //       meta: { title: 'Form', icon: 'form' }
+  //     }
+  //   ]
+  // modules.constantRoutes,
+  // }
+].concat(modulesConstantRoutes)
 
 export const asyncRoutes = [
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example', roles: ['1111', 'editor'] },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table', roles: ['1111', 'editor'] }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree', roles: ['editor'] }
-      }
-    ]
-  }
+  // {
+  //   path: '/example',
+  //   component: Layout,
+  //   redirect: '/example/table',
+  //   name: 'Example',
+  //   meta: { title: 'Example', icon: 'example', roles: ['1111', 'editor'] },
+  //   children: [
+  //     {
+  //       path: 'table',
+  //       name: 'Table',
+  //
+  //       component: () => import('@/views/table/index'),
+  //       meta: { title: 'Table', icon: 'table', roles: ['1111', 'editor'] }
+  //     },
+  //     {
+  //       path: 'tree',
+  //       name: 'Tree',
+  //
+  //       component: () => import('@/views/tree/index'),
+  //       meta: { title: 'Tree', icon: 'tree', roles: ['editor'] }
+  //     }
+  //   ]
+  // }
   /** modules routes */
 ].concat(modulesAsyncRoutes).concat([
   // 404 page must be placed at the end !!!
