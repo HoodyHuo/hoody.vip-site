@@ -5,6 +5,7 @@ const defaultSettings = require('./src/settings.js')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
+
 const CompressionPlugin = require('compression-webpack-plugin')
 const name = defaultSettings.title || 'vue Admin Template' // page title
 // If your port is set to 80,
@@ -15,8 +16,8 @@ const port = 9527 // dev port
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
-   * You will need to set publicPath if you plan to deploy your site under a sub path,
-   * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
+   * You will need to set publicPath if you plan to deploy.bat your site under a sub path,
+   * for example GitHub Pages. If you plan to deploy.bat your site to https://foo.github.io/bar/,
    * then publicPath should be set to "/bar/".
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
@@ -90,7 +91,10 @@ module.exports = {
             threshold: 10240,
             minRatio: 0.8,
             deleteOriginalAssets: false
-          }}))
+          }
+        }))
+    }
+    if (process.env.npm_config_report) {
       // 分析插件
       config
         .plugin('webpack-bundle-analyzer')
