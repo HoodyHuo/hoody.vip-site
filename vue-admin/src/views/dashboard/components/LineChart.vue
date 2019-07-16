@@ -7,7 +7,7 @@ import { parseTime } from '@/utils'
 
 export default {
   name: 'LineChart',
-  props: ['data'],
+  props: ['data', 'group'],
   data() {
     const metricData = JSON.parse(this.data.metricData)
     const xAxisData = []
@@ -27,13 +27,15 @@ export default {
       Maximum,
       Average,
       Minimum,
-      unit: this.data.unit
+      unit: this.data.unit,
+      myChart: null
     }
   },
   mounted() {
     const echarts = require('echarts')
-    const myChart = echarts.init(this.$refs.chart)
-    myChart.setOption(this.createChartOption())
+    this.myChart = echarts.init(this.$refs.chart)
+    this.myChart.group = this.group
+    this.myChart.setOption(this.createChartOption())
   },
   methods: {
     createChartOption() {

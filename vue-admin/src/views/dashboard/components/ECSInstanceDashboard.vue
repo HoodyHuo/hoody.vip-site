@@ -1,11 +1,17 @@
 <template>
   <div class="instance-container">
     <el-row>
-      {{ instance.instanceName }}
+      <div>{{ instance.instanceName }}</div>
+      <p />
+      <el-switch
+        v-model="isGroup"
+        active-text="开启图表联动"
+        inactive-text="关闭"
+      />
     </el-row>
     <el-row :gutter="40">
-      <el-col v-for="(val,key) in items" :key="key" :xs="24" :lg="11">
-        <LineChart :data="val" class="line-chart" />
+      <el-col v-for="(val,key) in items" :key="key" ref="charts" :xs="24" :lg="11">
+        <LineChart :data="val" :group="EcsGroup" class="line-chart" />
       </el-col>
     </el-row>
   </div>
@@ -14,15 +20,19 @@
 <script>
 // TODO 多表联动
 import LineChart from './LineChart'
+const echarts = require('echarts')
 
 export default {
   name: 'ECSInstanceDashboard',
   components: {
     LineChart
   },
+
   props: ['name', 'value'],
   data() {
     return {
+      EcsGroup: 'ecs-group',
+      isGroup: false,
       instance: {
         instanceName: this.name,
         imageId: this.value.imageId,
@@ -56,6 +66,23 @@ export default {
 
         InternetInRate: this.value.items.InternetInRate, // 公网流入带宽
         InternetOutRate: this.value.items.InternetOutRate // 公网流出带宽
+      }
+    }
+  },
+  watch: {
+    isGroup: function() {
+      this.groupCharts(this.isGroup)
+    }
+  },
+  mounted() {
+  },
+
+  methods: {
+    groupCharts(isGroup) {
+      if (isGroup) {
+        echarts.connect(this.EcsGroup)
+      } else {
+        echarts.disconnect(this.EcsGroup)
       }
     }
   }
