@@ -12,6 +12,10 @@ server:
     session:
       timeout: 30m
     context-path: /
+  compression:
+    enabled: true
+    mime-types: application/json,text/html,application/xml
+    min-response-size: 20KB
   #-------------------------------log 日志----------------------
 logging:
   config: 'classpath:logback-spring.xml'
