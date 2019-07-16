@@ -41,6 +41,7 @@ export default {
 
 <style scoped>
   .card:hover{
+    cursor:pointer;
     background-color: rgba(107, 134, 213, 0.75);
   }
   .block{

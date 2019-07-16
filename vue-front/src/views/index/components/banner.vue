@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { adminHerf } from '@/settings'
 import { Button } from 'element-ui'
 
 // const backgroundImage = '/intro-bg.jpg'
@@ -25,7 +24,7 @@ export default {
   },
   data() {
     return {
-      adminSrc: process.env.NODE_ENV === 'development' ? 'http://localhost:9528/admin' : 'http://114.55.171.14/admin'
+      adminSrc: process.env.VUE_APP_ADMIN_URL
     }
   },
   methods: {
@@ -33,7 +32,7 @@ export default {
       this.$router.push('/blog')
     },
     gotoAdmin() {
-      window.location.href = adminHerf
+      window.location.href = this.adminSrc
     }
   }
 }

@@ -46,7 +46,7 @@ export default {
   }
 
   .content {
-    background-color: rgba(222, 222, 222, 0.9);
+    background-color: rgba(245, 245, 245, 0.9);
     min-height: 500px
   }
 

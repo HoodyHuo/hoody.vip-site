@@ -39,4 +39,10 @@ export default {
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
+
+  @media (min-width: 1441px) {
+    .container {
+      Background-size: 100%;
+    }
+  }
 </style>
