@@ -8,26 +8,47 @@
         </el-card>
       </el-timeline-item>
     </el-timeline>
+    <div class="load-btn-warpper">
+      <el-button class="load-btn" type="success" @click.native="onLoad"> 点击 加载更多    </el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import { timeline } from '@/api/blog'
+import infiniteScroll from 'vue-infinite-scroll'
+import VUE from 'vue'
+import { getList } from '@/api/blog'
 import { parseTime } from '../../utils'
+VUE.use(infiniteScroll)
 
 export default {
   name: 'Index',
   data() {
     return {
-      blogs: ''
+      blogs: [],
+      page: 1,
+      totalPagesCount: 2,
+      needLoad: false
     }
   },
   created() {
-    timeline().then(res => {
-      this.blogs = res.data
-    })
+    this.getBlogs(this.page)
   },
   methods: {
+    onLoad() {
+      if (this.page > this.totalPagesCount) {
+        this.$message.success('没有更多内容了')
+      } else {
+        this.getBlogs(this.page)
+      }
+    },
+    getBlogs(page) {
+      getList(page, 5).then(res => {
+        this.blogs = this.blogs.concat(res.data.content)
+        this.totalPagesCount = res.data.totalPages
+        this.page += 1
+      })
+    },
     cutString: function(str) {
       return str.substring(0, 100)
     },
@@ -40,15 +61,25 @@ export default {
 </script>
 
 <style scoped>
-  .card:hover{
-    cursor:pointer;
+  .card:hover {
+    cursor: pointer;
     background-color: rgba(107, 134, 213, 0.75);
   }
   .block{
     width: 1400px;
     margin: auto;
   }
-.title{
+
+  .load-btn-warpper{
+    width: 100%;
+    text-align: center;
+  }
+  .load-btn{
+    margin: 0 auto;
+
+  }
+
+  .title{
   font-family: 幼圆;
   font-size: large;
 }
@@ -56,6 +87,9 @@ export default {
     /*覆盖浏览器默认设置*/
     ul{
       padding-inline-start: 10px;
+    }
+    .load-btn-warpper{
+      text-align: left;
     }
   }
 </style>
