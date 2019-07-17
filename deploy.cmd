@@ -1,17 +1,15 @@
-echo off
 :begin
+echo off
 echo 请选择需要执行的内容:
 echo 1:build vue-Front
 echo 2:build vue-Admin
 echo 3:build Springboot-API
-echo 4:build All of them
-echo 5:build deploy to ECS
-echo 6:quit
+echo 4:build All and deploy to ECS
+echo 5:quit 
 set all="false"
-choice /c:123456 /m:"please select:"
-if %errorlevel% == 6 goto end
-if %errorlevel% == 5 goto deploy
-if %errorlevel% == 4 goto buildAll
+choice /c:12345 /m:"please select:"
+if %errorlevel% == 5 goto end
+if %errorlevel% == 4 goto buildAndDeploy
 if %errorlevel% == 3 goto buildApi
 if %errorlevel% == 2 goto buildAdmin
 if %errorlevel% == 1 goto buildFront
@@ -41,7 +39,6 @@ echo --------------------- finished build vue-admin ! ---------------------
 if %all%=="true" (
 goto buildApi
 ) else (
-pause>nul
 goto begin)
 
 :buildApi
@@ -52,20 +49,23 @@ echo --------------------- start build Springboot-server ..... -----------------
 call mvnw package -DskipTests
 cd ..
 echo --------------------- finished build Springboot-server ! ---------------------
-pause>nul
-goto begin
+if %all%=="true" (
+goto deploy
+) else (
+goto begin)
 
 
-:buildAll
+:buildAndDeploy
 set all="true"
 goto buildFront
 
 
 :deploy
-echo 444
-pause>nul
+echo --------------------- Deploy to ECS ..... ---------------------
+call WinSCP /script=ScpScript.txt
+echo --------------------- Deploy to ECS  DONE..... ---------------------
 goto begin
 
 
 :end
-echo I want to quit
+echo quit

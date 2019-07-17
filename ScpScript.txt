@@ -1,0 +1,28 @@
+option confirm off
+open user:pwd@ip:port
+echo ----------------删除并重建 远程 /root/wait-deploy 目录--------------------
+call rm -rf /root/wait-deploy
+call mkdir /root/wait-deploy
+echo ----------------开始上传文件到 远程 /root/wait-deploy 目录--------------------
+put .\vue-admin\dist /root/wait-deploy/admin
+put .\vue-front\dist /root/wait-deploy/front
+put .\Springboot-server\target\vip-hoody-site-api.jar /root//wait-deploy/vip-hoody-site-api.jar
+echo ----------------停止 Docker 运行--------------------
+call sudo docker stop api
+call sudo docker stop dev-nginx
+echo ----------------删除 远程 /root/docker-mount/dev-nginx/dist/admin 挂载目录--------------------
+call rm -rf /root/docker-mount/dev-nginx/dist/admin
+echo ----------------删除 远程 /root/docker-mount/dev-nginx/dist/front 挂载目录--------------------
+call rm -rf /root/docker-mount/dev-nginx/dist/front
+echo ----------------删除 远程 /root/docker-mount/dev-nginx/dist/admin 挂载目录--------------------
+call rm -rf /root/docker-mount/dev-api/vip-hoody-site-api.jar
+echo ----------------复制 远程 /root/wait-deploy 的文件到docker 挂载目录--------------------
+call sudo cp -r /root/wait-deploy/admin /root/docker-mount/dev-nginx/dist/admin
+call sudo cp -r /root/wait-deploy/front /root/docker-mount/dev-nginx/dist/front
+call sudo cp -r /root/wait-deploy/vip-hoody-site-api.jar /root/docker-mount/dev-api/vip-hoody-site-api.jar
+echo ----------------启动 Docker 运行--------------------
+call sudo docker start api
+call sudo docker start dev-nginx
+close
+exit
+pause
