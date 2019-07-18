@@ -15,11 +15,8 @@
 </template>
 
 <script>
-import infiniteScroll from 'vue-infinite-scroll'
-import VUE from 'vue'
 import { getList } from '@/api/blog'
 import { parseTime } from '../../utils'
-VUE.use(infiniteScroll)
 
 export default {
   name: 'Index',
@@ -37,7 +34,7 @@ export default {
   methods: {
     onLoad() {
       if (this.page > this.totalPagesCount) {
-        this.$message.success('没有更多内容了')
+        this.$notify.warning({ title: '通知', message: '没有更多内容了' })
       } else {
         this.getBlogs(this.page)
       }

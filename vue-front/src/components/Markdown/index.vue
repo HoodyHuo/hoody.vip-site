@@ -9,22 +9,29 @@ Markdown 显示组件，传入content 作为prop 参数
 </template>
 
 <script>
-var marked = require('marked')
 import 'github-markdown-css'
+import { getMD2HtmlClean } from '../../utils/markdown'
 
 export default {
   name: 'Markdown',
   props: ['content'],
   data() {
     return {
-      htmlContent: marked(this.$props.content)
+      htmlContent: ''
     }
   },
   watch: {
     content(newVal, oldVal) {
-      this.htmlContent = marked(newVal)
+      this.htmlContent = this.cleanHTML()
+    }
+  },
+  methods: {
+    /** 通过DOMPurify过滤,防止XSS攻击 */
+    cleanHTML() {
+      return getMD2HtmlClean(this.$props.content)
     }
   }
+
 }
 </script>
 

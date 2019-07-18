@@ -17,10 +17,12 @@
   },
   "dependencies": {
     "axios": ">=0.18.0",
+    "dompurify": "^1.0.11",
     "element-ui": "2.7.2",
     "github-markdown-css": "^3.0.1",
     "js-cookie": "2.2.0",
     "marked": "^0.7.0",
+    "mavon-editor": "^2.7.5",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
