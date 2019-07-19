@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import springfox.documentation.spring.web.json.Json
 import vip.hoody.api.domain.Blog
+import vip.hoody.api.domain.Comment
 import vip.hoody.api.exception.StorageException
 import vip.hoody.api.service.BlogService
 import vip.hoody.api.service.StorageService
@@ -140,4 +141,19 @@ class BlogController {
         return new ResponseData(data: imgUrl)
     }
 
+    @RequestMapping(value = "comments/list/{id}", method = RequestMethod.GET)
+    ResponseData getComments(@PathVariable("id") Long blogId) {
+        if (blogId == null) {
+            return new ResponseData(code: 40001, msg: "缺少参数")
+        }
+        List<Comment> comments = blogService.getComments(blogId)
+        return new ResponseData(data: comments)
+    }
+
+    @ApiImplicitParam(name = 'comment', dataTypeClass = Comment.class, required = true)
+    @RequestMapping(value = "comment/save", method = RequestMethod.POST)
+    ResponseData saveComment(Comment comment) {
+        blogService.saveComment(comment)
+        return new ResponseData(data: comment)
+    }
 }

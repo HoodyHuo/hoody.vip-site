@@ -8,17 +8,26 @@ import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import vip.hoody.api.domain.Blog
+import vip.hoody.api.domain.Comment
 import vip.hoody.api.repository.BlogRepository
+import vip.hoody.api.repository.CommentRepository
 import vip.hoody.api.util.MimeTypeUtil
 
 @Service
 class BlogService {
 
-    @Autowired
     StorageService storageService
 
-    @Autowired
     BlogRepository blogRepository
+
+    CommentRepository commentRepository
+
+    @Autowired
+    BlogService(StorageService storageService, BlogRepository blogRepository, CommentRepository commentRepository) {
+        this.storageService = storageService
+        this.blogRepository = blogRepository
+        this.commentRepository = commentRepository
+    }
 
     Page list(int max, int page) {
         Pageable pageable = new PageRequest(page, max, Sort.Direction.DESC, "createTime")
@@ -51,6 +60,19 @@ class BlogService {
             }
         }
         return blogRepository.save(blog)
+    }
+
+    List<Comment> getComments(Long blogId) {
+        List<Comment> list = commentRepository.findAllbyBlogId(blogId)
+        list.each { Comment comment ->
+            comment.replyComments = commentRepository.findAllbyReplyTo(comment.id)
+        }
+        return list
+    }
+
+    Comment saveComment(Comment comment) {
+        commentRepository.save(comment)
+        return comment
     }
 
     /**

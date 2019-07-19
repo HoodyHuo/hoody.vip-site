@@ -13,3 +13,17 @@ export function getList(page, max) {
     params: { page, max }
   })
 }
+
+export function saveComment(comment) {
+  return request({
+    url: 'blog/comment/save',
+    method: 'post',
+    params: comment
+  })
+}
+export function getCommets(id) {
+  return request({
+    url: 'blog/comments/list/' + id,
+    method: 'get'
+  })
+}

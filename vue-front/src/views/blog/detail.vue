@@ -12,12 +12,12 @@
       </el-col>
 
       <el-col :span="24">
-        <Comments :blogid="blog.id" />
+        <Comments :blogid="blog.id" @commentsChange="getCommets" />
       </el-col>
     </el-row>
     <el-row class="reply-items">
       <el-col v-for="item in commentItems" :key="item.id" :span="24">
-        <CommentItem :blogid="blog.id" />
+        <CommentItem :comment="item" />
       </el-col>
     </el-row>
   </div>
@@ -28,7 +28,7 @@ import Comments from './components/Comments'
 import CommentItem from './components/CommentItem'
 import Markdown from '@/components/Markdown'
 import Copyright from '@/components/Copyright'
-import { getBlog } from '@/api/blog'
+import { getBlog, getCommets } from '@/api/blog'
 
 export default {
   name: 'Detail',
@@ -45,12 +45,24 @@ export default {
     }
   },
   created() {
-    const that = this
-    const id = this.$route.params.id // 获取router url路径参数 id
-    getBlog(id).then(res => {
-      that.blog = res.data
-      that.commentItems = [{},{},]
-    })
+    this.getBlog()
+    this.getCommets()
+  },
+  methods: {
+    getCommets() {
+      const that = this
+      const id = this.$route.params.id // 获取router url路径参数 id
+      getCommets(id).then(res => {
+        that.commentItems = res.data
+      })
+    },
+    getBlog() {
+      const that = this
+      const id = this.$route.params.id // 获取router url路径参数 id
+      getBlog(id).then(res => {
+        that.blog = res.data
+      })
+    }
   }
 }
 </script>
