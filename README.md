@@ -1,19 +1,30 @@
 # hoody.vip web site 
 
-个人网站 [Hoody's blog](http://www.hoody.vip)
+个人博客 [Hoody's blog](http://www.hoody.vip)
 
 > `Vue.js`  
-用了[花裤衩的vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)作为模板
+[花裤衩的vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)作为VUE框架基础
 
-> `Springboot` 做后端
- `shiro` 做权限控制 
- `Swagger` 做api调试
+> `Springboot` 做后端  
+ `shiro` 做权限控制  
+ `Swagger` 做api调试  
 
 
-> 发布环境 `docker` 整一套, 
-DockerFile 构建容器`mysql` `Nginx` `java环境` 
-阿里云[容器镜像服务](https://cr.console.aliyun.com) 环境上传,发布
+> 服务器: `阿里云ECS`  
+程序环境: `docker`   
 
+# 编译脚本
+
+`deploy.bat`
+```
+请选择需要执行的内容:
+1:build vue-Front
+2:build vue-Admin
+3:build Springboot-API
+4:build All and deploy to ECS
+5:quit 
+```
+发布至服务器需要本机安装WinSCP,并将其安装目录加入环境变量Path
   
 ## Browsers support
 

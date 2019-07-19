@@ -15,11 +15,17 @@
         <Comments :blogid="blog.id" />
       </el-col>
     </el-row>
+    <el-row class="reply-items">
+      <el-col v-for="item in commentItems" :key="item.id" :span="24">
+        <CommentItem :blogid="blog.id" />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 import Comments from './components/Comments'
+import CommentItem from './components/CommentItem'
 import Markdown from '@/components/Markdown'
 import Copyright from '@/components/Copyright'
 import { getBlog } from '@/api/blog'
@@ -29,11 +35,13 @@ export default {
   components: {
     Markdown,
     Comments,
-    Copyright
+    Copyright,
+    CommentItem
   },
   data() {
     return {
-      blog: {}
+      blog: {},
+      commentItems: []
     }
   },
   created() {
@@ -41,6 +49,7 @@ export default {
     const id = this.$route.params.id // 获取router url路径参数 id
     getBlog(id).then(res => {
       that.blog = res.data
+      that.commentItems = [{},{},]
     })
   }
 }
@@ -48,13 +57,13 @@ export default {
 
 <style lang="scss" scoped>
 
-.container{
+  .container {
     box-sizing: border-box;
     min-width: 200px;
     max-width: 980px;
     margin: 0 auto;
-    padding: 45px;
-}
+    /*padding: 45px;*/
+  }
 
   .title {
     box-sizing: border-box;
@@ -64,7 +73,7 @@ export default {
     font-family: 幼圆;
     padding: 45px;
     font-size: 20px;
-    font-weight:bolder;
+    font-weight: bolder;
     color: #d3dce6;
   }
 
@@ -77,5 +86,9 @@ export default {
     .title {
       padding: 15px;
     }
+  }
+
+  .reply-items{
+    background-color: rgba(245, 245, 245, 0.9);
   }
 </style>

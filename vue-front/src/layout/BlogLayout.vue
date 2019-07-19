@@ -14,7 +14,6 @@
       <hr color="d3dce6">
       <Footer />
     </el-footer>
-
   </el-container>
 </template>
 
@@ -22,7 +21,7 @@
 import Breadcrumb from '@/components/Breadcrumb'
 import Footer from './components/Footer'
 
-const backgroundImage = 'https://images4.alphacoders.com/891/891151.jpg'
+const backgroundImage = '/intro-bg.jpg'
 export default {
   name: 'BlogLayout',
   components: {
