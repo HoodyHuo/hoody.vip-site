@@ -35,6 +35,7 @@ class Comment implements Serializable {
     /** 评论人邮箱 */
     @Column(name = 'email')
     private String email
+
     /** 评论内容 */
     @Column(name = 'content')
     private String content
@@ -47,12 +48,27 @@ class Comment implements Serializable {
     @Column(name = 'reply_to')
     private Long replyTo
 
+    /** 回复的用户名称 */
+    @Column(name = 'reply_to_username')
+    private String replyToUsername
+
     @CreatedDate
     @Column(name = "create_time")
     private Date createTime
 
+    /**
+     * 追评
+     */
     @Transient
     private List<Comment> replyComments
+
+    String getReplyToUsername() {
+        return replyToUsername
+    }
+
+    void setReplyToUsername(String replyToUsername) {
+        this.replyToUsername = replyToUsername
+    }
 
     Long getReplyTo() {
         return replyTo
@@ -134,9 +150,10 @@ class Comment implements Serializable {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", floor=" + floor +
-//                ", replyto=" + replyto +
                 ", createTime=" + createTime +
                 ", replyComments=" + replyComments +
+                ", replyTo=" + replyTo +
+                ", replyToUsername=" + replyToUsername +
                 '}';
     }
 }

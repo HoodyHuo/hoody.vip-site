@@ -2,16 +2,24 @@
   <div class="comments-wapper">
     <el-row>
       <el-form>
-        <el-form-item><span class="title">添加新评论,支持Markdown格式</span>
+        <el-form-item>
+          <el-col :span="24">
+            <span class="title">添加新评论,支持Markdown格式</span>
+          </el-col>
+          <el-col :span="1">
+            <svg-icon icon-class="markdown" :style="{width: '2em', height: '2em'}" />
+          </el-col>
+          <el-col :span="23">
+            <el-input
+              v-model="commentData.content"
+              class="comments-input"
+              type="textarea"
+              :rows="4"
+              placeholder="等待你的评论"
+            />
+          </el-col>
         </el-form-item>
-        <el-input
-          v-model="commentData.content"
-          class="comments-input"
-          type="textarea"
-          :rows="4"
-          placeholder="等待你的评论"
-        />
-        <el-form-item :inline="true" class="meta">
+        <el-form-item>
           <el-col :lg="1">
             <svg-icon icon-class="name" />
           </el-col>
@@ -25,32 +33,38 @@
             <el-input v-model="commentData.email" placeholder="邮箱 *必填" />
           </el-col>
         </el-form-item>
-        <el-button
-          class="comments-submit"
-          type="submit"
-          @click.native="onSubmit"
-        >提交评论
-        </el-button>
+        <el-form-item>
+          <el-button
+            class="comments-submit"
+            type="submit"
+            @click.native="onSubmit"
+          >提交评论
+          </el-button>
+        </el-form-item>
       </el-form>
-    </el-row>
-    <el-row>
-      <el-col class="comments-totla" :span="24">总计1条</el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+/** 评论编辑器 */
 import { saveComment } from '@/api/blog'
+import { isEmail } from '@/api/validate'
 
 export default {
   name: 'Comments',
   components: {},
-  props: ['blogid', 'replyto'],
+  props: [
+    'blogid', // 从属博客ID
+    'replyto', // 从属评论ID
+    'replytousername' // 追评回复的用户名称
+  ],
   data: function() {
     return {
       commentData: {
         blogId: this.$props.blogid,
         replyTo: this.$props.replyto,
+        replyToUsername: this.$props.replytousername,
         content: '',
         name: '',
         email: ''
@@ -59,24 +73,27 @@ export default {
   },
   watch: {
     blogid() {
-      this.commentData.blogid = this.$props.blogid
+      this.commentData.blogId = this.$props.blogid
     },
     replyto() {
       this.commentData.replyTo = this.$props.replyto
+    },
+    replytousername() {
+      this.commentData.replyToUsername = this.$props.replytousername
     }
   },
   methods: {
     validateUsername(name) {
       if (name === '' || name.length > 20) {
-        this.$notify.error('必须填入称呼,且长度不能超过10个字符')
+        this.$notify.error('请填入称呼,且长度不能超过10个字符')
         return false
       } else {
         return true
       }
     },
     validateEmail(email) {
-      if (email === '' || email.length > 20) {
-        this.$notify.error('必须填入称呼,且长度不能超过10个字符')
+      if (email === '' || !isEmail(email)) {
+        this.$notify.error('请填入合法的Email地址')
         return false
       } else {
         return true
@@ -84,7 +101,7 @@ export default {
     },
     validateContent(content) {
       if (content === '') {
-        this.$notify.error('评论内容不能是空白')
+        this.$notify.error('请留下你的文字')
         return false
       } else {
         return true
@@ -94,11 +111,8 @@ export default {
       const data = this.commentData
       if (this.validateUsername(data.name) && this.validateEmail(data.email) && this.validateContent(data.content)) {
         saveComment(data).then((res) => {
-          if (res.success) {
-            this.$emit('commentsChange')
-          } else {
-            this.$notify.warning(JSON.stringify(res.msg))
-          }
+          this.$message.success('提交评论成功')
+          this.$emit('commentsChange')
         })
       }
     }
@@ -110,7 +124,14 @@ export default {
   .comments-wapper {
     background-color: #2c2a2a;
     padding: 5px;
-    color: #1abc9c;
+    color: #1abc9c
+
+  }
+
+  .svg-icon {
+
+    margin-left: 5px;
+    width: 1.5em;
   }
 
   .title {
@@ -131,6 +152,7 @@ export default {
 
   .comments-submit {
     color: #2c2a2a;
+
     width: 100%;
     background-color: #1abc9c;
   }

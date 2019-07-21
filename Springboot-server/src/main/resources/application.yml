@@ -50,3 +50,6 @@ platform:
     regionld: 'cn-hangzhou'
     access-key: '*********'
     access-key-secret: '********'
+  blog:
+    comment:
+      saveInterval: 1000 #评论提交评率限制,单位:毫秒

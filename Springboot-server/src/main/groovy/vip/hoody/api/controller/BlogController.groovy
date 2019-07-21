@@ -97,11 +97,6 @@ class BlogController {
         return new ResponseData(data: blog)
     }
 
-    @RequestMapping(value = "timeline", method = [RequestMethod.GET, RequestMethod.POST])
-    ResponseData timeline() {
-        List<Blog> blogs = blogService.getRecent()
-        return new ResponseData(data: blogs)
-    }
     /**
      * 保存博客文本
      * @param blog
@@ -141,6 +136,11 @@ class BlogController {
         return new ResponseData(data: imgUrl)
     }
 
+    /**
+     * 获取博客的评论信息
+     * @param blogId 博客ID
+     * @return
+     */
     @RequestMapping(value = "comments/list/{id}", method = RequestMethod.GET)
     ResponseData getComments(@PathVariable("id") Long blogId) {
         if (blogId == null) {
@@ -150,6 +150,22 @@ class BlogController {
         return new ResponseData(data: comments)
     }
 
+    /**
+     * 获取指定评论的追评
+     * @param commentId  评论ID
+     * @return
+     */
+    @RequestMapping(value = "comments/reply/{id}", method = RequestMethod.GET)
+    ResponseData getCommentsReply(@PathVariable("id") Long commentId) {
+        List<Comment> comments = blogService.getCommentsReply(commentId)
+        return new ResponseData(data: comments)
+    }
+
+    /**
+     * 保存博客评论
+     * @param comment
+     * @return
+     */
     @ApiImplicitParam(name = 'comment', dataTypeClass = Comment.class, required = true)
     @RequestMapping(value = "comment/save", method = RequestMethod.POST)
     ResponseData saveComment(Comment comment) {

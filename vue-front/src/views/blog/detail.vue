@@ -17,7 +17,7 @@
     </el-row>
     <el-row class="reply-items">
       <el-col v-for="item in commentItems" :key="item.id" :span="24">
-        <CommentItem :comment="item" />
+        <CommentItem :comment="item" @commentsReply="refresh" />
       </el-col>
     </el-row>
   </div>
@@ -49,6 +49,10 @@ export default {
     this.getCommets()
   },
   methods: {
+    refresh() {
+      debugger
+      this.getCommets()
+    },
     getCommets() {
       const that = this
       const id = this.$route.params.id // 获取router url路径参数 id
@@ -70,11 +74,11 @@ export default {
 <style lang="scss" scoped>
 
   .container {
+    scroll-behavior: smooth; /*平滑滚动*/
     box-sizing: border-box;
     min-width: 200px;
     max-width: 980px;
     margin: 0 auto;
-    /*padding: 45px;*/
   }
 
   .title {
@@ -91,7 +95,8 @@ export default {
 
   .content {
     background-color: rgba(245, 245, 245, 0.9);
-    min-height: 500px
+    min-height: 500px;
+    padding: 45px;
   }
 
   @media (max-width: 1440px) {
@@ -100,7 +105,7 @@ export default {
     }
   }
 
-  .reply-items{
+  .reply-items {
     background-color: rgba(245, 245, 245, 0.9);
   }
 </style>

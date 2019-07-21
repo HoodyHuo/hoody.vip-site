@@ -29,29 +29,43 @@ class BlogService {
         this.commentRepository = commentRepository
     }
 
+    /**
+     * 获取博客列表(分页)
+     * @param max 每页数量
+     * @param page 页数
+     * @return
+     */
     Page list(int max, int page) {
         Pageable pageable = new PageRequest(page, max, Sort.Direction.DESC, "createTime")
         def data = blogRepository.findAll(pageable)
         return data
     }
 
+    /**
+     * 获取博客信息
+     * @param id
+     * @return
+     */
     Blog getDetail(Long id) {
         return blogRepository.findById(id).get()
     }
 
+    /**
+     * 删除博客
+     * @param ids 需要删除的博客ID List
+     */
     void delete(List<Long> ids) {
         ids.each { Long id ->
             blogRepository.deleteById(id)
         }
     }
 
-    List<Blog> getRecent(Integer num) {
-        num = num == null ? 5 : num
-        Pageable pageable = new PageRequest(0, num, Sort.Direction.DESC, "createTime")
-        def data = blogRepository.findAll(pageable)
-        return data.content
-    }
 
+    /**
+     * 保存\更新博客
+     * @param blog
+     * @return
+     */
     Blog save(Blog blog) {
         if (blog.id != null) {
             Blog sotrageBlog = blogRepository.findById(blog.id).get()
@@ -62,6 +76,11 @@ class BlogService {
         return blogRepository.save(blog)
     }
 
+    /**
+     * 获取指定博客的评论信息
+     * @param blogId
+     * @return
+     */
     List<Comment> getComments(Long blogId) {
         List<Comment> list = commentRepository.findAllbyBlogId(blogId)
         list.each { Comment comment ->
@@ -70,9 +89,24 @@ class BlogService {
         return list
     }
 
+    /**
+     * 保存评论
+     * @param comment
+     * @return
+     */
     Comment saveComment(Comment comment) {
+        comment.floor = 1 + commentRepository.countByBlogIdAndReplyTo(comment.blogId, comment.replyTo)
         commentRepository.save(comment)
         return comment
+    }
+
+    /**
+     * 获取指定评论的追评
+     * @param commentId
+     * @return
+     */
+    List<Comment> getCommentsReply(Long commentId) {
+        return commentRepository.findAllbyReplyTo(commentId)
     }
 
     /**
