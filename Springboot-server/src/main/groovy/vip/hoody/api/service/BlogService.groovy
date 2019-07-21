@@ -5,7 +5,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 import vip.hoody.api.domain.Blog
 import vip.hoody.api.domain.Comment
@@ -14,6 +16,7 @@ import vip.hoody.api.repository.CommentRepository
 import vip.hoody.api.util.MimeTypeUtil
 
 @Service
+@Transactional
 class BlogService {
 
     StorageService storageService
@@ -54,9 +57,11 @@ class BlogService {
      * 删除博客
      * @param ids 需要删除的博客ID List
      */
+    @Modifying
     void delete(List<Long> ids) {
         ids.each { Long id ->
             blogRepository.deleteById(id)
+            commentRepository.deleteByBlogId(id)
         }
     }
 

@@ -13,4 +13,6 @@ interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllbyReplyTo(Long replyTo)
 
     int countByBlogIdAndReplyTo(Long blogId, Long replyTo)
+
+    void deleteByBlogId(Long blogId)
 }
