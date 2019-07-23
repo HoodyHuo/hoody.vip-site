@@ -41,7 +41,7 @@ export default {
   },
   head() {
     return {
-      title: this.$store.state.page.title,
+      title: this.blog.title,
       meta: [
         { title: '博客详情' }
       ]
@@ -53,15 +53,11 @@ export default {
     }
   },
   computed: {
-    // title() {
-    // return this.$store.state.page.title
-    // }
   },
   asyncData({ store, params, redirect, $axios }) {
+    store.commit('page/addBreadcrumb', { path: `/blog/detail/${params.id}`, name: '博客详情' })
     return getBlog(params.id)
       .then(({ data }) => {
-        store.commit('page/setTitle', data.title)
-        store.commit('page/addBreadcrumb', { path: `/blog/detail/${params.id}`, name: '博客详情' })
         return { blog: data }
       }).catch((e) => {
         redirect('/404')

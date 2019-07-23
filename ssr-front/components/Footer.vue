@@ -1,10 +1,7 @@
 <template>
   <div class="footer-container">
-    <div class="footer-top">
-      <a href="#">Github</a> |
-    </div>
     <p>
-      2019 © Hoody | 备案号
+      2019 © Hoody | 备案号 蜀ICP备19021783号
     </p>
 
   </div>

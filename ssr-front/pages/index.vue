@@ -10,9 +10,7 @@
           <el-col :span="24" class="motto">“凡事尽力而为，而后顺其自然”</el-col>
           <el-col :span="23" :offset="1" class="icon">
             <nuxt-link to="/blog"><svg-icon icon-class="blog" class="icon" /></nuxt-link>
-            <a href="https://github.com/HoodyHuo">
-              <svg-icon icon-class="github" class="icon" />
-            </a>
+            <a href="https://github.com/HoodyHuo"><svg-icon icon-class="github" class="icon" /></a>
           </el-col>
         </el-row>
       </el-col>
@@ -72,10 +70,6 @@ export default {
       text-align: left;
       font-weight: bold;
     }
-     @media (max-width: 1440px) {
-       .title{
-       }
-     }
 .icon{
   padding-top:1em;
 }

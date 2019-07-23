@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <el-timeline>
+    <el-timeline class="content">
       <el-timeline-item
         v-for="blog in blogs"
         :key="blog.id"
@@ -8,14 +8,21 @@
         :timestamp="parseTime(blog.createTime)"
         placement="top"
       >
-        <el-card class="card" herf="detail/" @click.native="toDetail(blog.id)">
-          <p class="title">{{ blog.title }}</p>
-          <p>{{ cutString(blog.content) }}</p>
-        </el-card>
+        <nuxt-link :to="'/blog/detail/'+blog.id">
+          <el-card class="card">
+            <p class="title">{{ blog.title }}</p>
+            <p>{{ cutString(blog.content) }}</p>
+          </el-card>
+        </nuxt-link>
       </el-timeline-item>
     </el-timeline>
-    <div class="load-btn-warpper">
-      <el-button class="load-btn" type="success" @click.native="onLoad"> 点击 加载更多</el-button>
+    <div v-show="page>1" class="load-btn-warpper">
+      <nuxt-link :to="{path:'/blog/'+(page-1)}"><el-button class="load-btn" type="success"> 上一页</el-button>
+      </nuxt-link>
+    </div>
+    <div v-show="totalPagesCount>page" class="load-btn-warpper">
+      <nuxt-link :to="{path:'/blog/'+(page+1)}"><el-button class="load-btn" type="success"> 下一页</el-button>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -29,54 +36,48 @@ export default {
   layout: 'blog',
   head() {
     return {
-      title: '近期博客 Hoody'
+      title: this.title
     }
   },
   data() {
     return {
       blogs: [],
+      pro: 'default',
       page: 1,
       totalPagesCount: 2,
       needLoad: false
     }
   },
-  asyncData({ store }) {
-    store.commit('page/setTitle', '博客列表')
+  async asyncData({ store, params, $axios }) {
     store.commit('page/addBreadcrumb', { path: `/blog`, name: '博客列表' })
-  },
-  created() {
-    this.getBlogs(this.page)
+    const { data } = await getList(params.page || 1, 5)
+    return {
+      title: '博客列表',
+      blogs: data.content,
+      page: params.page ? parseInt(params.page) : 1,
+      totalPagesCount: data.totalPages
+    }
   },
   methods: {
-    onLoad() {
-      if (this.page > this.totalPagesCount) {
-        this.$notify.warning({ title: '通知', message: '没有更多内容了' })
-      } else {
-        this.getBlogs(this.page)
-      }
-    },
-    getBlogs(page) {
-      getList(page, 5).then(res => {
-        this.blogs = this.blogs.concat(res.data.content)
-        this.totalPagesCount = res.data.totalPages
-        this.page += 1
-      })
-    },
     cutString: function(str) {
       return str.substring(0, 100)
     },
-    parseTime: parseTime,
-    toDetail: function(id) {
-      this.$router.push('/blog/detail/' + id)
-    }
+    parseTime: parseTime
   }
 }
 </script>
 
 <style scoped>
+a{
+text-decoration : none;
+}
   .card:hover {
     cursor: pointer;
     background-color: rgba(107, 134, 213, 0.75);
+  }
+  .content{
+    width: 100%;
+    height: 680px
   }
 
   .block {
