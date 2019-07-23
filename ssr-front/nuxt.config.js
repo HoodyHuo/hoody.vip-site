@@ -10,6 +10,13 @@ export default {
       total: true
     }
   },
+  // 通用头部信息
+  head: {
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' }
+    ]
+  },
   mode: 'universal',
   env: {
   },
@@ -21,7 +28,8 @@ export default {
   ** Global CSS
   */
   css: [
-    'element-ui/lib/theme-chalk/index.css'
+    'element-ui/lib/theme-chalk/index.css',
+    'assets/page-transfer.css'
   ],
   /*
   ** Plugins to load before mounting the App

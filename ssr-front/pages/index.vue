@@ -1,72 +1,87 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        ssr-nuxt-vue
-      </h1>
-      <h2 class="subtitle">
-        My premium Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <el-container
+    :style="{'background-image':`url(${backgroundImage})`}"
+    class="container"
+  >
+    <el-main class="content">
+      <!-- <el-row > -->
+      <el-col :md="{span:8,offset:8}" :xs="24">
+        <el-col :span="24" class="title">Hoody's Blog</el-col>
+        <el-col :span="24" class="motto">“凡事尽力而为，而后顺其自然”</el-col>
+        <el-col :span="1" class="icon">
+          <nuxt-link to="/blog"><svg-icon icon-class="blog" class="icon" /></nuxt-link>
+        </el-col>
+        <el-col :span="1" :offset="1" class="icon">
+          <a href="https://github.com/HoodyHuo"><svg-icon icon-class="github" class="icon" /></a>
+        </el-col>
+      </el-col>
+      <!-- </el-row> -->
+    </el-main>
+    <el-footer>
+      <hr>
+      <Footer />
+    </el-footer>
+  </el-container>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
+// import Logo from '@/components/Logo.vue'
+import Footer from '../components/Footer'
+const backgroundImage = 'https://images4.alphacoders.com/891/891151.jpg'
 export default {
+  name: 'FirstPage',
   components: {
-    Logo
+    Footer
+  },
+  data() {
+    return {
+      backgroundImage
+    }
+  },
+  head() {
+    return {
+      title: "Hoody's Blog"
+    }
   }
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
+.container{
+    height: 937px;
+    /* height: 100%; */
+    width: 100%;
+    margin: 0 auto;
+    padding: 45px;
+    /* 固定背景,不自动平铺  */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+.content{
+  padding-top: 45px
+  }
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+      font-family: HACKED;
+      font-size: 50px;
+      color: #348d9d;
+      margin: 0px auto 10px auto;
+      padding-top: 1px;
+      text-align: left;
+      font-weight: bold;
+    }
+     @media (max-width: 1440px) {
+       .title{
+       }
+     }
+
+.icon{
+  color: aqua;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
+  @media (min-width: 1441px) {
+    .container {
+      Background-size: 100%;
+    }
+  }
 </style>

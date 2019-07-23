@@ -40,11 +40,11 @@ service.interceptors.response.use(
     const res = response.data
 
     if (res.code === 20000) {
-      Message({
-        message: res.message || '操作成功',
-        type: 'success',
-        duration: 1 * 1000
-      })
+    //   Message({
+    //     message: res.message || '操作成功',
+    //     type: 'success',
+    //     duration: 1 * 1000
+    //   })
       return res
     } else {
       // if the custom code is not 200, it is judged as an error.

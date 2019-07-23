@@ -39,16 +39,28 @@ export default {
     Copyright,
     CommentItem
   },
+  head() {
+    return {
+      title: this.$store.state.page.title
+    }
+  },
   data() {
     return {
       commentItems: []
     }
   },
-  asyncData({ params, error, $axios }) {
+  computed: {
+    // title() {
+    // return this.$store.state.page.title
+    // }
+  },
+  asyncData({ store, params, redirect, $axios }) {
     return getBlog(params.id)
-    // return $axios.get(`blog/detail/${params.id}`)
       .then(({ data }) => {
+        store.commit('page/setTitle', data.title)
         return { blog: data }
+      }).catch((e) => {
+        redirect('/404')
       })
   },
   mounted() {
