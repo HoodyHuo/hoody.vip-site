@@ -3,17 +3,18 @@
     :style="{'background-image':`url(${backgroundImage})`}"
     class="container"
   >
-    <el-main class="content">
-      <!-- <el-row > -->
-      <el-col :md="{span:8,offset:8}" :xs="24">
-        <el-col :span="24" class="title">Hoody's Blog</el-col>
-        <el-col :span="24" class="motto">“凡事尽力而为，而后顺其自然”</el-col>
-        <el-col :span="1" class="icon">
-          <nuxt-link to="/blog"><svg-icon icon-class="blog" class="icon" /></nuxt-link>
-        </el-col>
-        <el-col :span="1" :offset="1" class="icon">
-          <a href="https://github.com/HoodyHuo"><svg-icon icon-class="github" class="icon" /></a>
-        </el-col>
+    <el-main>
+      <el-col :md="{span:10,offset:8}" :xs="24" class="">
+        <el-row class="content">
+          <el-col :span="24" class="title">Hoody's Blog</el-col>
+          <el-col :span="24" class="motto">“凡事尽力而为，而后顺其自然”</el-col>
+          <el-col :span="23" :offset="1" class="icon">
+            <nuxt-link to="/blog"><svg-icon icon-class="blog" class="icon" /></nuxt-link>
+            <a href="https://github.com/HoodyHuo">
+              <svg-icon icon-class="github" class="icon" />
+            </a>
+          </el-col>
+        </el-row>
       </el-col>
       <!-- </el-row> -->
     </el-main>
@@ -27,7 +28,7 @@
 <script>
 // import Logo from '@/components/Logo.vue'
 import Footer from '../components/Footer'
-const backgroundImage = 'https://images4.alphacoders.com/891/891151.jpg'
+const backgroundImage = 'intro-bg.jpg'
 export default {
   name: 'FirstPage',
   components: {
@@ -46,9 +47,8 @@ export default {
 }
 </script>
 
-<style>
-
-.container{
+<style scoped>
+  .container{
     height: 937px;
     /* height: 100%; */
     width: 100%;
@@ -58,11 +58,13 @@ export default {
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
-.content{
-  padding-top: 45px
+  .content{
+    margin-top: 20%;
+    padding-bottom: 30px;
+    background-color: rgb(209, 216, 221);
+    border-radius: 25px;
   }
 .title {
-      font-family: HACKED;
       font-size: 50px;
       color: #348d9d;
       margin: 0px auto 10px auto;
@@ -74,14 +76,22 @@ export default {
        .title{
        }
      }
-
 .icon{
-  color: aqua;
+  padding-top:1em;
+}
+  .svg-icon {
+    color: #348d9d;
+    height: 6em;
+    width: 6em;
+  }
+.motto{
+ font-size: 50px;
+      color: #348d9d;
 }
 
-  @media (min-width: 1441px) {
+  /* @media (min-width: 1441px) {
     .container {
       Background-size: 100%;
     }
-  }
+  } */
 </style>

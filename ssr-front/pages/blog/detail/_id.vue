@@ -31,7 +31,7 @@ import Copyright from '@/components/Copyright'
 import { getBlog, getCommets } from '@/api/blog'
 
 export default {
-  layout: 'blog',
+  // layout: 'blog',
   name: 'Detail',
   components: {
     Markdown,
@@ -41,7 +41,10 @@ export default {
   },
   head() {
     return {
-      title: this.$store.state.page.title
+      title: this.$store.state.page.title,
+      meta: [
+        { title: '博客详情' }
+      ]
     }
   },
   data() {
@@ -58,6 +61,7 @@ export default {
     return getBlog(params.id)
       .then(({ data }) => {
         store.commit('page/setTitle', data.title)
+        store.commit('page/addBreadcrumb', { path: `/blog/detail/${params.id}`, name: '博客详情' })
         return { blog: data }
       }).catch((e) => {
         redirect('/404')

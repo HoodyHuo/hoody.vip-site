@@ -65,6 +65,9 @@ export default {
       secure: false
     }
   },
+  router: {
+    middleware: 'breadcrumb'
+  },
   /*
   ** Build configuration
   */

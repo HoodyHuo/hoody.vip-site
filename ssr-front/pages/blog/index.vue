@@ -40,6 +40,10 @@ export default {
       needLoad: false
     }
   },
+  asyncData({ store }) {
+    store.commit('page/setTitle', '博客列表')
+    store.commit('page/addBreadcrumb', { path: `/blog`, name: '博客列表' })
+  },
   created() {
     this.getBlogs(this.page)
   },
