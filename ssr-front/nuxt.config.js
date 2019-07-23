@@ -68,7 +68,7 @@ export default {
     extend(config, ctx) {
       // 排除 nuxt 原配置的影响
       const svgRule = config.module.rules.find(rule => rule.test.test('.svg'))
-      svgRule.exclude = [resolve(__dirname, 'assets/svg')]
+      svgRule.exclude = [resolve(__dirname, 'icons/svg')]
       // set svg-sprite-loader
       config.module.rules.push({
         test: /\.svg$/,
