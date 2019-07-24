@@ -1,10 +1,11 @@
 
 const { resolve } = require('path')
+console.dir(process.env.NODE_ENV === 'production')
 
 export default {
 
   server: {
-    port: 3000, // default: 3000
+    port: process.env.NODE_ENV === 'production' ? 80 : 3000, // default: 3000
     host: '0.0.0.0', // default: localhost,
     timing: {
       total: true
@@ -58,10 +59,14 @@ export default {
   //   debug: process.env._ENV !== 'production',
   //   withCredentials: true
   // },
+
   proxy: {
     '/api/': {
-      target: 'http://localhost:8080',
-      pathRewrite: { '^/api/': '' },
+      target: process.env.NODE_ENV === 'production' ? 'http://hoody.vip/api/' : 'http://localhost:8080',
+      // target: 'http://localhost:8080',
+      pathRewrite: {
+        '^/api/': process.env.NODE_ENV !== 'production' ? '' : '/api'
+      },
       secure: false
     }
   },
@@ -76,19 +81,25 @@ export default {
     /*
     ** You can extend webpack config here
     */
+    loaders: [
+    ],
     extend(config, ctx) {
-      // 排除 nuxt 原配置的影响
+      // //   // 排除 nuxt 原配置的影响
       const svgRule = config.module.rules.find(rule => rule.test.test('.svg'))
-      svgRule.exclude = [resolve(__dirname, 'icons/svg')]
-      // set svg-sprite-loader
+      svgRule.exclude = [resolve(__dirname, 'assets/icons/svg')]
+
       config.module.rules.push({
         test: /\.svg$/,
-        include: [resolve(__dirname, 'icons/svg')],
-        loader: 'svg-sprite-loader',
-        options: {
-          symbolId: 'icon-[name]'
-        }
-
+        include: [resolve(__dirname, 'assets/icons/svg')],
+        use: [
+          { loader: 'svg-sprite-loader',
+            options: {
+              extract: false,
+              symbolId: 'icon-[name]'
+              // publicPath: '/_nuxt/'
+            }
+          }
+        ]
       })
     }
   }

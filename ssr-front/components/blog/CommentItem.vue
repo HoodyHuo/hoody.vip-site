@@ -5,7 +5,7 @@
       <el-col :span="23">
         <el-row>
           <el-col :span="1">
-            <svg-icon icon-class="person" />
+            <svg-icon icon-class="person" class="person-icon" />
           </el-col>
           <el-col :span="20" class="auth">{{ comment.name }}</el-col>
           <el-col v-if="!isReply" :span="2" :offset="1">#{{ comment.floor }}</el-col>
@@ -139,9 +139,15 @@ export default {
   }
 
   .reply-icon {
+    height: 1em;
+    width: 1em;
     fill: #2c2a2a;
   }
 
+.person-icon{
+   height: 1.8em;
+    width: 1.8em;
+}
   .reply-icon-bg {
     background-color: #1abc9c;
   }

@@ -1,4 +1,3 @@
-import { Message } from 'element-ui'
 export default function({ $axios, redirect }) {
   // request interceptor
   $axios.interceptors.request.use(
@@ -8,7 +7,6 @@ export default function({ $axios, redirect }) {
     },
     error => {
       // do something with request error
-      console.log(error) // for debug
       return Promise.reject(error)
     }
   )
@@ -35,13 +33,7 @@ export default function({ $axios, redirect }) {
     },
     error => {
       console.log('err' + error) // for debug
-      if (process.client) {
-        Message({
-          message: error.message,
-          type: 'error',
-          duration: 5 * 1000
-        })
-      }
+
       return Promise.reject(error)
     }
   )

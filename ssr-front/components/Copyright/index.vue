@@ -1,6 +1,6 @@
 <template>
   <div class="copyright">
-    <svg-icon icon-class="copyright" />除非注明，否则均为HoodyHuo原创文章，转载必须以链接形式标明本文链接
+    <svg-icon icon-class="copyright" class="icon" />除非注明，否则均为HoodyHuo原创文章，转载必须以链接形式标明本文链接
   </div>
 </template>
 
@@ -12,6 +12,10 @@ export default {
 </script>
 
 <style scoped>
+.icon{
+  height: 1em;
+  width: 1em;
+}
 .copyright{
     background-color: #e0e2e4;
     padding: 5px;

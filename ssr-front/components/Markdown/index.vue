@@ -19,11 +19,19 @@ export default {
       default: null
     }
   },
+  data() {
+    return {
+      cleanHtml: ''
+    }
+  },
   computed: {
     htmlContent: function() {
       return getMD2HtmlClean(this.$props.content)
     }
   }
+  // mounted() {
+  //   this.cleanHtml = getMD2HtmlClean(this.$props.content)
+  // }
 }
 </script>
 

@@ -143,9 +143,9 @@ export default {
   }
 
   .svg-icon {
-
-    margin-left: 5px;
+    margin-left: 0.5em;
     width: 1.5em;
+    height: 1.5em;
   }
 
   .title {

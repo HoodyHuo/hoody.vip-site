@@ -16,12 +16,12 @@
         </nuxt-link>
       </el-timeline-item>
     </el-timeline>
-    <div v-show="page>1" class="load-btn-warpper">
-      <nuxt-link :to="{path:'/blog/'+(page-1)}"><el-button class="load-btn" type="success"> 上一页</el-button>
+    <div class="load-btn-warpper">
+      <nuxt-link v-show="page>1" :to="{path:'/blog/'+(page-1)}">
+        <el-button class="load-btn" type="success"> 上一页</el-button>
       </nuxt-link>
-    </div>
-    <div v-show="totalPagesCount>page" class="load-btn-warpper">
-      <nuxt-link :to="{path:'/blog/'+(page+1)}"><el-button class="load-btn" type="success"> 下一页</el-button>
+      <nuxt-link v-show="totalPagesCount>page" :to="{path:'/blog/'+(page+1)}">
+        <el-button class="load-btn" type="success"> 下一页</el-button>
       </nuxt-link>
     </div>
   </div>
@@ -68,20 +68,22 @@ export default {
 </script>
 
 <style scoped>
-a{
-text-decoration : none;
-}
+  a {
+    text-decoration: none;
+  }
+
   .card:hover {
     cursor: pointer;
     background-color: rgba(107, 134, 213, 0.75);
   }
-  .content{
+
+  .content {
     width: 100%;
     height: 680px
   }
 
   .block {
-    width: 1400px;
+    width: 1440px;
     margin: auto;
   }
 
@@ -100,14 +102,23 @@ text-decoration : none;
     font-size: large;
   }
 
-  @media (max-width: 1439px) {
+  @media (max-width: 1440px) {
     /*覆盖浏览器默认设置*/
     ul {
       padding-inline-start: 10px;
     }
+     .block {
+        width: 100%;
+        margin: auto;
+      }
 
-    .load-btn-warpper {
+    @media (max-width: 768px) {
+      .block {
+        height: 100%;
+      }
+      /* .load-btn-warpper {
       text-align: left;
+      } */
     }
   }
 </style>
