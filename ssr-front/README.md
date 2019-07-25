@@ -1,6 +1,8 @@
-# ssr-nuxt-vue
+# ssr-front
 
-> My premium Nuxt.js project
+> 博客对外开放部分项目,主要负责博客的展示,评论  
+基于 [Nuxt.js - The Vue.js Framework](https://nuxtjs.org/)  
+
 
 ## Build Setup
 

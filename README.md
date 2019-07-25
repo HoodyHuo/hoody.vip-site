@@ -1,24 +1,22 @@
-# hoody.vip web site 
+# 个人博客 [Hoody's blog](http://www.hoody.vip) 项目
 
-个人博客 [Hoody's blog](http://www.hoody.vip)
+主要采用Springboot应用做后端,Nuxt JS 做前端,便于SSR,Vue-cli3 做管理端页面
 
-> `Vue.js`  
-[花裤衩的vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)作为VUE框架基础
+## 目录介绍
+|目录|描述|文档|
+|-|-|-|
+|Springboot-Server|基于Springboot的后端项目(Maven)|[README.md](https://github.com/HoodyHuo/hoody.vip-site/tree/master/Springboot-server)
+|ssr-front|Nuxt js 框架 的博客前端,服务器端渲染,便于搜索引擎收录|[README.md](https://github.com/HoodyHuo/hoody.vip-site/tree/master/ssr-front)
+|vue-admin|vue-cli3 的前端管理项目|[README.md](https://github.com/HoodyHuo/hoody.vip-site/tree/master/vue-admin)
+|deploy.cmd & ScpScript.txt |项目编译与上传服务器脚本|
 
-> `Springboot` 做后端  
- `shiro` 做权限控制  
- `Swagger` 做api调试  
-
-
-> 服务器: `阿里云ECS`  
-程序环境: `docker`   
 
 # 编译脚本
 
 `deploy.bat`
 ```
 请选择需要执行的内容:
-1:build vue-Front
+1:build ssr-Front
 2:build vue-Admin
 3:build Springboot-API
 4:build All and deploy to ECS

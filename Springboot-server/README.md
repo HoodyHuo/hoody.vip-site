@@ -1,20 +1,21 @@
 ## 简介
 前后端分离，前端只利用Json来和后端进行交互  
 后端不返回页面，只返回Json数据。  
-前后端之间完全通过public API约定。  
 
 包含:
 > - Swagger2 ui 进行API 测试
 > - Groovy 混合开发(主要用于Controller和service)
 >-  JPA + MySQL 数据处理
 >-  Shiro 权限控制 
-
+#
 ## Groovy 
 
 如果通过IDE进行编辑,需要配置源码目录包含`/src/main/groovy` 目录
 
+#
 ## Shiro
 ### 自定义Session获取方式  
+
 配置
 ````
   @Bean
@@ -48,7 +49,7 @@ class CustomSessionManager extends DefaultWebSessionManager {
     }
 }
 ````
-
+#
 ## Swagger2 api
 
 需要注意  
