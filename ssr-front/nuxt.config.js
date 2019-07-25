@@ -5,7 +5,7 @@ console.dir(process.env.NODE_ENV === 'production')
 export default {
 
   server: {
-    port: process.env.NODE_ENV === 'production' ? 80 : 3000, // default: 3000
+    port: process.env.NODE_ENV === 'production' ? 80 : 80, // default: 3000
     host: '0.0.0.0', // default: localhost,
     timing: {
       total: true
@@ -62,7 +62,7 @@ export default {
 
   proxy: {
     '/api/': {
-      target: process.env.NODE_ENV === 'production' ? 'http://hoody.vip/api/' : 'http://localhost:8080',
+      target: process.env.NODE_ENV === 'production' ? 'http://114.55.171.14/api' : 'http://localhost:8080',
       // target: 'http://localhost:8080',
       pathRewrite: {
         '^/api/': process.env.NODE_ENV !== 'production' ? '' : '/api'

@@ -6,7 +6,7 @@ import { Message } from 'element-ui'
 import axios from 'axios'
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? 'http://hoody.vip/api/' : 'http://localhost:3000/api/', // 所有请求,都通过Nuxt进行代理
+  baseURL: process.env.NODE_ENV === 'production' ? '/api/' : '/api/', // 所有请求,都通过Nuxt进行代理
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })

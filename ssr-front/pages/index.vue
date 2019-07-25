@@ -9,7 +9,7 @@
           <el-col :span="24" class="title">Hoody's Blog</el-col>
           <el-col :span="24" class="motto">“凡事尽力而为，而后顺其自然”</el-col>
           <el-col :span="23" :offset="1" class="icon">
-            <nuxt-link to="/blog"><svg-icon icon-class="blog" class="icon" /></nuxt-link>
+            <nuxt-link to="/blog" alt=" Hoody's Blog "><svg-icon icon-class="blog" class="icon" /></nuxt-link>
             <a href="https://github.com/HoodyHuo"><svg-icon icon-class="github" class="icon" /></a>
           </el-col>
         </el-row>

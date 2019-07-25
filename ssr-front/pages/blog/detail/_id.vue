@@ -7,6 +7,7 @@
       <el-col :span="24">
         <Markdown class="content" :content="blog.content" />
       </el-col>
+      <el-backtop target=""></el-backtop>
       <el-col :span="24">
         <Copyright />
       </el-col>
@@ -41,9 +42,9 @@ export default {
   },
   head() {
     return {
-      title: this.blog.title,
+      title: `Hoody's Blog - 个人博客 - ${this.blog.title}`,
       meta: [
-        { title: '博客详情' }
+        { name: 'tag', content: this.blog.tag || '' }
       ]
     }
   },

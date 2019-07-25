@@ -50,7 +50,9 @@ class BlogService {
      * @return
      */
     Blog getDetail(Long id) {
-        return blogRepository.findById(id).get()
+        Optional<Blog> blog = blogRepository.findById(id)
+        return blog.isPresent() ? blog.get() : null
+
     }
 
     /**

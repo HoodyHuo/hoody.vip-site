@@ -5,24 +5,41 @@ call rm -rf /root/wait-deploy
 call mkdir /root/wait-deploy
 echo ----------------开始上传文件到 远程 /root/wait-deploy 目录--------------------
 put .\vue-admin\dist /root/wait-deploy/admin
-put .\vue-front\dist /root/wait-deploy/front
-put .\Springboot-server\target\vip-hoody-site-api.jar /root//wait-deploy/vip-hoody-site-api.jar
+
+mkdir /root/wait-deploy/front
+put .\ssr-front\.nuxt /root/wait-deploy/front/.nuxt
+put .\ssr-front\package.json /root/wait-deploy/front/package.json
+put .\ssr-front\static /root/wait-deploy/front/static
+put .\ssr-front\nuxt.config.js /root/wait-deploy/front/nuxt.config.js
+
+put .\Springboot-server\target\vip-hoody-site-api.jar /root/wait-deploy/vip-hoody-site-api.jar
 echo ----------------停止 Docker 运行--------------------
 call sudo docker stop api
 call sudo docker stop dev-nginx
+call sudo docker stop ssr
 echo ----------------删除 远程 /root/docker-mount/dev-nginx/dist/admin 挂载目录--------------------
 call rm -rf /root/docker-mount/dev-nginx/dist/admin
 echo ----------------删除 远程 /root/docker-mount/dev-nginx/dist/front 挂载目录--------------------
-call rm -rf /root/docker-mount/dev-nginx/dist/front
+call rm -rf /root/docker-mount/dev-ssr/.nuxt
+call rm -rf /root/docker-mount/dev-ssr/package.json
+call rm -rf /root/docker-mount/dev-ssr/static
+call rm -rf /root/docker-mount/dev-ssr/nuxt.config.js
+
 echo ----------------删除 远程 /root/docker-mount/dev-nginx/dist/admin 挂载目录--------------------
 call rm -rf /root/docker-mount/dev-api/vip-hoody-site-api.jar
 echo ----------------复制 远程 /root/wait-deploy 的文件到docker 挂载目录--------------------
 call sudo cp -r /root/wait-deploy/admin /root/docker-mount/dev-nginx/dist/admin
-call sudo cp -r /root/wait-deploy/front /root/docker-mount/dev-nginx/dist/front
+
+call sudo cp -r /root/wait-deploy/front/.nuxt /root/docker-mount/dev-ssr/.nuxt
+call sudo cp -r /root/wait-deploy/front/package.json /root/docker-mount/dev-ssr/package.json
+call sudo cp -r /root/wait-deploy/front/static /root/docker-mount/dev-ssr/static
+call sudo cp -r /root/wait-deploy/front/nuxt.config.js /root/docker-mount/dev-ssr/nuxt.config.js
+
 call sudo cp -r /root/wait-deploy/vip-hoody-site-api.jar /root/docker-mount/dev-api/vip-hoody-site-api.jar
 echo ----------------启动 Docker 运行--------------------
 call sudo docker start api
 call sudo docker start dev-nginx
+call sudo docker start ssr
 close
 exit
 pause

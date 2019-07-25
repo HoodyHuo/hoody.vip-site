@@ -15,12 +15,14 @@ if %errorlevel% == 2 goto buildAdmin
 if %errorlevel% == 1 goto buildFront
 
 :buildFront
-if exist vue-front\dist (
-echo ---------------------delete /vue-fornt/dist---------------------
-call rmdir /q /s vue-front\dist
+if exist ssr-front\.nuxt (
+echo ---------------------delete ssr-front\.nuxt---------------------
+call rmdir /q /s ssr-front\.nuxt
 )
-echo ---------------------start build vue-front .....---------------------
-call npm run build:prod -prefix ./vue-front
+echo ---------------------start build ssr-front .....---------------------
+cd ssr-front
+call npm run build
+cd ..
 echo --------------------- finished build vue-front ! ---------------------
 if %all%=="true" (
 goto buildAdmin

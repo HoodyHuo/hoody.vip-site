@@ -2,7 +2,7 @@
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item) in levelList" :key="item.path">
-        <a class="link-breadcrumb" @click.prevent="handleLink(item)">{{ item.name }}</a>
+        <nuxt-link class="link-breadcrumb" :to="item.path">{{ item.name }}</nuxt-link>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>

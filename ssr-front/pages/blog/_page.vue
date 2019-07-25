@@ -8,7 +8,7 @@
         :timestamp="parseTime(blog.createTime)"
         placement="top"
       >
-        <nuxt-link :to="'/blog/detail/'+blog.id">
+        <nuxt-link :to="'/blog/detail/'+blog.id" :alt="blog.title">
           <el-card class="card">
             <p class="title">{{ blog.title }}</p>
             <p>{{ cutString(blog.content) }}</p>
@@ -52,7 +52,7 @@ export default {
     store.commit('page/addBreadcrumb', { path: `/blog`, name: '博客列表' })
     const { data } = await getList(params.page || 1, 5)
     return {
-      title: '博客列表',
+      title: "博客列表 - Hoody's Blog",
       blogs: data.content,
       page: params.page ? parseInt(params.page) : 1,
       totalPagesCount: data.totalPages
