@@ -105,18 +105,16 @@ export default {
   .container {
     scroll-behavior: smooth; /*平滑滚动*/
     box-sizing: border-box;
-    min-width: 200px;
-    max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
   }
 
   .title {
+    text-shadow: 0 0 0.2em #24292e, 0 0 0.2em #55bd8c, 0 0 0.2em #e7eaeb;
     box-sizing: border-box;
     min-width: 200px;
-    max-width: 980px;
     margin: 0 auto;
-    font-family: 幼圆;
-    padding: 45px;
+    padding: 0.1em;
     font-size: 2em;
     font-weight: bolder;
     color: #d3dce6;
@@ -133,6 +131,7 @@ export default {
       padding: 15px;
     }
   }
+
   .catalog {
     border-radius: 30px;
     background-color: rgb(227, 229, 230);

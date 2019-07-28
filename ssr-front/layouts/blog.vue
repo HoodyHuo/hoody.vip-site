@@ -1,25 +1,24 @@
 <template>
-  <el-container
-    class="blog-container"
-    :style="{'background-image':`url(${backgroundImage})`}"
-  >
-    <el-header class="blog-header">
-      Hoody's Blog
-    </el-header>
-    <el-main class="blog-main">
-      <el-row>
-        <el-col :lg="14"><Breadcrumb class="breadcrumb" /></el-col>
-        <el-col :lg="7"> <Search :text="searchText" /></el-col>
-      </el-row>
-      <el-row>
-        <router-view />
-      </el-row>
-    </el-main>
-    <el-footer class="blog-footer">
-      <hr color="d3dce6">
-      <Footer />
-    </el-footer>
-  </el-container>
+  <div class="layout-blog-container" :style="{'background-image':`url(${backgroundImage})`}">
+    <el-container class="blog-container">
+      <el-header class="blog-header">
+        Hoody's Blog
+      </el-header>
+      <el-main class="blog-main">
+        <el-row>
+          <el-col :lg="17"><Breadcrumb class="breadcrumb" /></el-col>
+          <el-col :lg="7"> <Search :text="searchText" /></el-col>
+        </el-row>
+        <el-row>
+          <router-view />
+        </el-row>
+      </el-main>
+      <el-footer class="blog-footer">
+        <hr color="d3dce6">
+        <Footer />
+      </el-footer>
+    </el-container>
+  </div>
 </template>
 
 <script>
@@ -40,27 +39,28 @@ export default {
       backgroundImage: backgroundImage,
       searchText: this.$route.params.query
     }
-  },
-  mounted() {
   }
 }
 </script>
 
 <style lang="css" scoped>
-  .blog-container {
-    box-sizing: border-box;
-    min-width: 300px;
-    /*max-width: 100%;*/
-    min-height: 100%;
-    margin: 0 auto;
-    padding: 45px;
+  .layout-blog-container{
     /* 固定背景,不自动平铺  */
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
+  .blog-container {
+    scroll-behavior: smooth; /*平滑滚动*/
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 1400px;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 45px;
+  }
 
   .breadcrumb {
-    padding-left: 100px;
+    padding-left: 15px;
   }
 
   .blog-header {
@@ -71,14 +71,8 @@ export default {
     color: #ffff;
   }
 
-  .blog-footer {
-  }
-
-  .blog-main {
-  }
-
   @media (min-width: 1441px) {
-    .blog-container {
+    .layout-blog-container {
       Background-size: 100%;
     }
   }
@@ -92,7 +86,7 @@ export default {
       padding-left: 15px;
     }
 
-    .blog-container {
+    .layout-blog-container {
       padding: 15px;
     }
   }

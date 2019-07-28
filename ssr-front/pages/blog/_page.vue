@@ -90,7 +90,7 @@ export default {
   }
 
   .block {
-    width: 1440px;
+    width: 100%;
     margin: auto;
   }
 
