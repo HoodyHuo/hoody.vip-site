@@ -7,7 +7,7 @@
       <el-col :span="24">
         <Markdown class="content" :content="blog.content" />
       </el-col>
-      <el-backtop target=""></el-backtop>
+      <el-backtop target="" />
       <el-col :span="24">
         <Copyright />
       </el-col>

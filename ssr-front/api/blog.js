@@ -8,11 +8,11 @@ export function getBlog(id) {
   })
 }
 /** 获取博客列表 */
-export function getList(page, max) {
+export function getList(page, max, query) {
   return request({
     url: 'blog/list',
     method: 'get',
-    params: { page, max }
+    params: { page, max, query }
   })
 }
 /** 提交评论 */

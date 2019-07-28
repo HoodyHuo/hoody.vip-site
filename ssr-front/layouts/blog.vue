@@ -7,8 +7,13 @@
       Hoody's Blog
     </el-header>
     <el-main class="blog-main">
-      <Breadcrumb class="breadcrumb" />
-      <router-view />
+      <el-row>
+        <el-col :lg="14"><Breadcrumb class="breadcrumb" /></el-col>
+        <el-col :lg="7"> <Search :text="searchText" /></el-col>
+      </el-row>
+      <el-row>
+        <router-view />
+      </el-row>
     </el-main>
     <el-footer class="blog-footer">
       <hr color="d3dce6">
@@ -20,18 +25,23 @@
 <script>
 import Breadcrumb from '@/components/Breadcrumb'
 import Footer from '@/components/Footer'
+import Search from '@/components/blog/Search'
 
 const backgroundImage = '/intro-bg.jpg'
 export default {
   name: 'BlogLayout',
   components: {
     Breadcrumb,
-    Footer
+    Footer,
+    Search
   },
   data() {
     return {
-      backgroundImage: backgroundImage
+      backgroundImage: backgroundImage,
+      searchText: this.$route.params.query
     }
+  },
+  mounted() {
   }
 }
 </script>

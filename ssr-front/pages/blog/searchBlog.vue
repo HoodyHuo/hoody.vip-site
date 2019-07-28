@@ -16,15 +16,11 @@
         </nuxt-link>
       </el-timeline-item>
     </el-timeline>
-
     <div class="load-btn-warpper">
-      <nuxt-link v-show="page>1" :to="{path:'/blog/'+(page-1)}">
+      <nuxt-link v-show="page>1" :to="{path:`/blog/searchBlog?page=${(page-1)}&query=${query}`}">
         <el-button class="load-btn" type="success"> 上一页</el-button>
       </nuxt-link>
-      <nuxt-link v-for="index in totalPagesCount " :key="index" :to="{path:'/blog/'+(index)}">
-        <el-button :class="{ currentPage: page===index }" class="load-btn" type="success">{{ index }}</el-button>
-      </nuxt-link>
-      <nuxt-link v-show="totalPagesCount>page" :to="{path:'/blog/'+(page+1)}">
+      <nuxt-link v-show="totalPagesCount>page" :to="{path:`/blog/searchBlog?page=${(page+1)}&query=${query}`}">
         <el-button class="load-btn" type="success"> 下一页</el-button>
       </nuxt-link>
     </div>
@@ -36,7 +32,7 @@ import { getList } from '@/api/blog'
 import { parseTime } from '@/utils/time'
 
 export default {
-  name: 'Index',
+  name: 'Search',
   layout: 'blog',
   head() {
     return {
@@ -48,18 +44,20 @@ export default {
       blogs: [],
       pro: 'default',
       page: 1,
+      query: '',
       totalPagesCount: 2,
       needLoad: false
     }
   },
-  async asyncData({ store, params, $axios }) {
-    store.commit('page/addBreadcrumb', { path: `/blog`, name: '博客列表' })
-    const { data } = await getList(params.page || 1, 5)
+  async asyncData({ store, query }) {
+    store.commit('page/addBreadcrumb', { path: `/blog`, name: `博客搜索:${query.query}` })
+    const { data } = await getList(query.page || 1, 5, query.query)
     return {
-      title: "博客列表 - Hoody's Blog",
+      title: `博客搜索:${query.query} - Hoody's Blog`,
       blogs: data.content,
-      page: params.page ? parseInt(params.page) : 1,
-      totalPagesCount: data.totalPages
+      page: query.page ? parseInt(query.page) : 1,
+      totalPagesCount: data.totalPages,
+      query: query.query
     }
   },
   methods: {
@@ -74,9 +72,6 @@ export default {
 <style scoped>
   a {
     text-decoration: none;
-  }
-  .currentPage{
-    background-color: #304156;
   }
 
   .card:hover {
@@ -101,6 +96,7 @@ export default {
 
   .load-btn {
     margin: 0 auto;
+
   }
 
   .title {
@@ -113,15 +109,17 @@ export default {
     ul {
       padding-inline-start: 10px;
     }
-     .block {
-        width: 100%;
-        margin: auto;
-      }
+
+    .block {
+      width: 100%;
+      margin: auto;
+    }
 
     @media (max-width: 768px) {
       .block {
         height: 100%;
       }
+
       /* .load-btn-warpper {
       text-align: left;
       } */

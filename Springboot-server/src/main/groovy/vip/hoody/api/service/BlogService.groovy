@@ -38,9 +38,16 @@ class BlogService {
      * @param page 页数
      * @return
      */
-    Page list(int max, int page) {
-        Pageable pageable = new PageRequest(page, max, Sort.Direction.DESC, "createTime")
-        def data = blogRepository.findAll(pageable)
+    Page list(int max, int page, String query) {
+
+        Page data = null
+        if (query == null) {
+            Pageable pageable = new PageRequest(page, max, Sort.Direction.DESC, "createTime")
+            data = blogRepository.findAll(pageable)
+        } else {
+            Pageable pageable = new PageRequest(page, max, Sort.Direction.DESC, "create_Time")
+            data = blogRepository.findAllByQuery(query,pageable)
+        }
         return data
     }
 

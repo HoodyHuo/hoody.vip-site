@@ -2,14 +2,9 @@ package vip.hoody.api.controller
 
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
-import jdk.nashorn.internal.parser.JSONParser
-import org.apache.shiro.authz.annotation.RequiresGuest
 import org.apache.shiro.authz.annotation.RequiresPermissions
-import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
-import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,20 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
-import springfox.documentation.spring.web.json.Json
 import vip.hoody.api.domain.Blog
 import vip.hoody.api.domain.Comment
-import vip.hoody.api.exception.StorageException
 import vip.hoody.api.service.BlogService
-import vip.hoody.api.service.StorageService
-import vip.hoody.api.service.impl.FileSystemStorageService
 import vip.hoody.api.util.ResponseData
 import vip.hoody.api.util.TimeUtil
-
-import javax.servlet.http.HttpServletRequest
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 
 @RestController
 @RequestMapping("/blog")
@@ -49,13 +35,18 @@ class BlogController {
     @ApiImplicitParams([
             @ApiImplicitParam(name = "max", dataType = "Integer", example = "2", defaultValue = "10", value = "5"),
             @ApiImplicitParam(name = "page", dataType = "Integer", example = "2", defaultValue = "1", value = "1")
+//            @ApiImplicitParam(name = "query", dataType = "String", example = "nuxt", defaultValue = null)
     ])
     @GetMapping("list")
-    ResponseData list(@RequestParam("max") Integer max, @RequestParam("page") Integer page) {
+    ResponseData list(
+            @RequestParam("max") Integer max,
+            @RequestParam("page") Integer page,
+            @RequestParam(value = "query", required = false) String query
+    ) {
         page = page == null ? 0 : page - 1 //JPA 分页从 0开始
         max = max == null ? 5 : max
 
-        Page pageData = blogService.list(max, page)
+        Page pageData = blogService.list(max, page,query)
 
         return new ResponseData(
                 data: [
@@ -152,7 +143,7 @@ class BlogController {
 
     /**
      * 获取指定评论的追评
-     * @param commentId  评论ID
+     * @param commentId 评论ID
      * @return
      */
     @RequestMapping(value = "comments/reply/{id}", method = RequestMethod.GET)
