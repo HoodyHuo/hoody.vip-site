@@ -4,15 +4,16 @@
       <el-col :span="24">
         <div class="title">{{ blog.title }}</div>
       </el-col>
-      <el-col :span="24">
-        <Markdown class="content" :content="blog.content" />
+      <el-col :sm="24" :lg="20">
+        <Markdown id="loading-animation" class="content" :content="blog.content" />
       </el-col>
-      <el-backtop target="" />
-      <el-col :span="24">
+      <el-col :span="4">
+        <div id="blog_catalog" class="catalog hidden-sm-and-down" />
+      </el-col>
+      <el-col :sm="24" :lg="20">
         <Copyright />
       </el-col>
-
-      <el-col :span="24">
+      <el-col :sm="24" :lg="20">
         <Comments :blogid="blog.id" @commentsChange="getCommets" />
       </el-col>
     </el-row>
@@ -30,6 +31,9 @@ import CommentItem from '@/components/blog/CommentItem'
 import Markdown from '@/components/Markdown'
 import Copyright from '@/components/Copyright'
 import { getBlog, getCommets } from '@/api/blog'
+import Catelog from '@/utils/markdown/progress-catalog'
+import '@/utils/markdown/progress-catalog.css'
+import 'element-ui/lib/theme-chalk/display.css'
 
 export default {
   // layout: 'blog',
@@ -53,8 +57,7 @@ export default {
       commentItems: []
     }
   },
-  computed: {
-  },
+  computed: {},
   asyncData({ store, params, redirect, $axios }) {
     store.commit('page/addBreadcrumb', { path: `/blog/detail/${params.id}`, name: '博客详情' })
     return getBlog(params.id)
@@ -65,9 +68,17 @@ export default {
       })
   },
   mounted() {
+    this.createCatalog()
     this.getCommets()
   },
   methods: {
+    createCatalog() {
+      new Catelog({
+        contentEl: 'loading-animation',
+        catalogEl: `blog_catalog`
+        // selector: ['h2', 'h3']
+      })
+    },
     refresh() {
       this.getCommets()
     },
@@ -95,7 +106,7 @@ export default {
     scroll-behavior: smooth; /*平滑滚动*/
     box-sizing: border-box;
     min-width: 200px;
-    max-width: 980px;
+    max-width: 1400px;
     margin: 0 auto;
   }
 
@@ -106,7 +117,7 @@ export default {
     margin: 0 auto;
     font-family: 幼圆;
     padding: 45px;
-    font-size: 20px;
+    font-size: 2em;
     font-weight: bolder;
     color: #d3dce6;
   }
@@ -121,6 +132,16 @@ export default {
     .title {
       padding: 15px;
     }
+  }
+  .catalog {
+    border-radius: 30px;
+    background-color: rgb(227, 229, 230);
+    font-size: 1rem;
+    font-weight: bolder;
+    position: fixed;
+    transition: top .2s;
+    max-width: 20em;
+    min-height: 40em;
   }
 
   .reply-items {
