@@ -155,7 +155,7 @@ export default {
   .reply-item {
     box-sizing: border-box;
     min-width: 200px;
-    max-width: 980px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 5px;
   }

@@ -15,10 +15,9 @@ export default {
 
 <style scoped>
   .footer-container{
-    margin-left:auto ;
+    margin:auto ;
     float: right;
     color: #d3dce6;
     box-sizing: border-box;
-    margin: auto;
   }
 </style>

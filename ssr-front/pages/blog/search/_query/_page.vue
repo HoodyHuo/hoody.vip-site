@@ -16,6 +16,7 @@
         </nuxt-link>
       </el-timeline-item>
     </el-timeline>
+    <div class="blog-search-none" v-show="blogs.length===0">Sorry 无相关内容</div>
     <div class="load-btn-warpper">
       <nuxt-link v-show="page>1" :to="{path:`/blog/search/${query}/${(page-1)}`}">
         <el-button class="load-btn" type="success"> 上一页</el-button>
@@ -31,8 +32,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/blog'
-import { parseTime } from '@/utils/time'
+import { getList } from '~/api/blog'
+import { parseTime } from '~/utils/time'
 
 export default {
   name: 'Search',
@@ -74,61 +75,5 @@ export default {
 </script>
 
 <style scoped>
-  a {
-    text-decoration: none;
-  }
-
-  .card:hover {
-    cursor: pointer;
-    background-color: rgba(107, 134, 213, 0.75);
-  }
-
-  .content {
-    width: 100%;
-    height: 680px
-  }
-
-  .block {
-    width: 1440px;
-    margin: auto;
-  }
-
-  .load-btn-warpper {
-    width: 100%;
-    text-align: center;
-  }
-
-  .load-btn {
-    margin: 0 auto;
-  }
-  .currentPage{
-    background-color: #304156;
-  }
-
-  .title {
-    font-family: 幼圆;
-    font-size: large;
-  }
-
-  @media (max-width: 1440px) {
-    /*覆盖浏览器默认设置*/
-    ul {
-      padding-inline-start: 10px;
-    }
-
-    .block {
-      width: 100%;
-      margin: auto;
-    }
-
-    @media (max-width: 768px) {
-      .block {
-        height: 100%;
-      }
-
-      /* .load-btn-warpper {
-      text-align: left;
-      } */
-    }
-  }
+  @import "@/assets/css/blog/blog-page";
 </style>

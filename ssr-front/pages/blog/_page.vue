@@ -15,19 +15,18 @@
           </el-card>
         </nuxt-link>
       </el-timeline-item>
+      <div class="load-btn-warpper">
+        <nuxt-link v-show="page>1" :to="{path:'/blog/'+(page-1)}">
+          <el-button class="load-btn"> 上一页</el-button>
+        </nuxt-link>
+        <nuxt-link v-for="index in totalPagesCount " :key="index" :to="{path:'/blog/'+(index)}">
+          <el-button :class="{currentPage: page===index ,'load-btn':page!==index}">{{ index }}</el-button>
+        </nuxt-link>
+        <nuxt-link v-show="totalPagesCount>page" :to="{path:'/blog/'+(page+1)}">
+          <el-button class="load-btn"> 下一页</el-button>
+        </nuxt-link>
+      </div>
     </el-timeline>
-
-    <div class="load-btn-warpper">
-      <nuxt-link v-show="page>1" :to="{path:'/blog/'+(page-1)}">
-        <el-button class="load-btn" type="success"> 上一页</el-button>
-      </nuxt-link>
-      <nuxt-link v-for="index in totalPagesCount " :key="index" :to="{path:'/blog/'+(index)}">
-        <el-button :class="{ currentPage: page===index }" class="load-btn" type="success">{{ index }}</el-button>
-      </nuxt-link>
-      <nuxt-link v-show="totalPagesCount>page" :to="{path:'/blog/'+(page+1)}">
-        <el-button class="load-btn" type="success"> 下一页</el-button>
-      </nuxt-link>
-    </div>
   </div>
 </template>
 
@@ -72,59 +71,5 @@ export default {
 </script>
 
 <style scoped>
-  a {
-    text-decoration: none;
-  }
-  .currentPage{
-    background-color: #304156;
-  }
-
-  .card:hover {
-    cursor: pointer;
-    background-color: rgba(107, 134, 213, 0.75);
-  }
-
-  .content {
-    width: 100%;
-    height: 680px
-  }
-
-  .block {
-    width: 100%;
-    margin: auto;
-  }
-
-  .load-btn-warpper {
-    width: 100%;
-    text-align: center;
-  }
-
-  .load-btn {
-    margin: 0 auto;
-  }
-
-  .title {
-    font-family: 幼圆;
-    font-size: large;
-  }
-
-  @media (max-width: 1440px) {
-    /*覆盖浏览器默认设置*/
-    ul {
-      padding-inline-start: 10px;
-    }
-     .block {
-        width: 100%;
-        margin: auto;
-      }
-
-    @media (max-width: 768px) {
-      .block {
-        height: 100%;
-      }
-      /* .load-btn-warpper {
-      text-align: left;
-      } */
-    }
-  }
+  @import "@/assets/css/blog/blog-page";
 </style>

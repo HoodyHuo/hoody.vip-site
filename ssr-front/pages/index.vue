@@ -14,7 +14,6 @@
           </el-col>
         </el-row>
       </el-col>
-      <!-- </el-row> -->
     </el-main>
     <el-footer>
       <hr>

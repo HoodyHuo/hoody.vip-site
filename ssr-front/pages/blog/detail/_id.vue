@@ -13,12 +13,10 @@
       <el-col :sm="24" :lg="20">
         <Copyright />
       </el-col>
-      <el-col :sm="24" :lg="20">
+      <el-col id="blog-comments" :sm="24" :lg="20">
         <Comments :blogid="blog.id" @commentsChange="getCommets" />
       </el-col>
-    </el-row>
-    <el-row class="reply-items">
-      <el-col v-for="item in commentItems" :key="item.id" :span="24">
+      <el-col v-for="item in commentItems" :key="item.id" class="reply-items" :sm="24" :lg="20">
         <CommentItem :comment="item" @commentsReply="refresh" />
       </el-col>
     </el-row>
@@ -122,10 +120,8 @@ export default {
 
   .content {
     background-color: rgba(245, 245, 245, 0.9);
-    min-height: 500px;
     padding: 45px;
   }
-
   @media (max-width: 1440px) {
     .title {
       padding: 15px;
@@ -134,7 +130,7 @@ export default {
 
   .catalog {
     border-radius: 30px;
-    background-color: rgb(227, 229, 230);
+    background-color: rgba(245, 245, 245, 0.9);
     font-size: 1rem;
     font-weight: bolder;
     position: fixed;

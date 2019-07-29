@@ -1,0 +1,56 @@
+a {
+  text-decoration: none;
+}
+
+.card:hover {
+  cursor: pointer;
+  background-color: #348d9d;
+  color: #d3dce6;
+}
+
+.content {
+  width: 100%;
+}
+
+.block {
+  width: 100%;
+  min-height: 680px;
+  margin: auto;
+}
+
+.load-btn-warpper {
+  width: 100%;
+  text-align: center;
+}
+
+.el-button {
+  color: #d3dce6;
+  font-size: 1em;
+}
+
+.load-btn {
+  background-color: #348d9d;
+  border-color: #348d9d;
+  margin: 0 auto;
+}
+
+.currentPage {
+  background-color: #304156;
+}
+
+.title {
+  font-family: 幼圆;
+  font-size: large;
+}
+
+.blog-search-none {
+  color: #bfcbd9;
+  font-size: 5em;
+}
+
+@media (max-width: 1440px) {
+  /*覆盖浏览器默认设置*/
+  ul {
+    padding-inline-start: 10px;
+  }
+}

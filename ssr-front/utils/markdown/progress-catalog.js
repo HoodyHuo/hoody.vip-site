@@ -10,7 +10,6 @@ export default function(opts) {
     bottomMargin: 0,
     cool: true // 炫酷模式开关
   }
-
   const Opt = Object.assign({}, defaultOpts, opts)
 
   const $content = document.getElementById(Opt.contentEl) // 内容获取区
@@ -153,6 +152,14 @@ export default function(opts) {
     const parentItem = { id: -1 }
     let lastTreeItem = null
     let id
+    /** 增加回到顶部 */
+    tree.push({
+      name: '顶部',
+      tagName: 'H1',
+      id: 'blog_header', // blog layout header id
+      level: 1,
+      parent: parentItem
+    })
 
     for (let i = 0; i < catalogs.length; i++) {
       title = catalogs[i].innerText || catalogs[i].textContent
@@ -176,6 +183,14 @@ export default function(opts) {
       lastTreeItem = treeItem
       tree.push(treeItem)
     }
+    /** 前往评论 */
+    tree.push({
+      name: '评论',
+      tagName: 'H1',
+      id: 'blog-comments', // blog layout header id
+      level: 1,
+      parent: parentItem
+    })
     return tree
   }
 

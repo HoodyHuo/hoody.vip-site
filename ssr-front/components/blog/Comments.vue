@@ -138,7 +138,7 @@ export default {
   .comments-wapper {
     background-color: #2c2a2a;
     padding: 5px;
-    color: #1abc9c
+    color: #348d9d;
 
   }
 
@@ -149,7 +149,7 @@ export default {
   }
 
   .title {
-    color: #1abc9c;
+    color: #348d9d;
     font-size: 1.5625rem;
     font-weight: 500;
   }
@@ -168,6 +168,6 @@ export default {
     color: #2c2a2a;
 
     width: 100%;
-    background-color: #1abc9c;
+    background-color: #348d9d;
   }
 </style>
