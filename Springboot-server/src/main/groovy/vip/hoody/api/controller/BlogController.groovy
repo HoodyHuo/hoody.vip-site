@@ -24,8 +24,12 @@ import vip.hoody.api.util.TimeUtil
 @RequestMapping("/blog")
 class BlogController {
 
-    @Autowired
     BlogService blogService
+
+    @Autowired
+    BlogController(BlogService blogService) {
+        this.blogService = blogService
+    }
 
     /**
      * 获取博客列表

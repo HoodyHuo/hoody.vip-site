@@ -44,6 +44,7 @@ shiro:
   web:
     enabled: true #启用或停用shiro 权限过滤
 platform:
+  baseUrl: 'hoody.vip'
   logsPath: "./server/logs"
   uploadDir: "./server/uploadFile"
   aliyun:

@@ -1,23 +1,23 @@
 <template>
   <div class="layout-blog-container" :style="{'background-image':`url(${backgroundImage})`}">
-    <el-container class="blog-container">
-      <el-header class="blog-header">
+    <div class="blog-container">
+      <el-row id="blog_header" class="blog-header">
         Hoody's Blog
-      </el-header>
-      <el-main class="blog-main">
+      </el-row>
+      <el-row class="blog-main">
         <el-row>
-          <el-col :lg="17"><Breadcrumb class="breadcrumb" /></el-col>
-          <el-col :lg="7"> <Search :text="searchText" /></el-col>
+          <el-col :lg="17" :xs="24"><Breadcrumb class="breadcrumb" /></el-col>
+          <el-col :lg="7" :xs="24"> <Search :text="searchText" /></el-col>
         </el-row>
         <el-row>
-          <router-view />
+          <el-col span="24"><router-view /></el-col>
         </el-row>
-      </el-main>
-      <el-footer class="blog-footer">
-        <hr color="d3dce6">
-        <Footer />
-      </el-footer>
-    </el-container>
+      </el-row>
+      <el-row>
+        <el-col span="24"><hr color="d3dce6"></el-col>
+        <el-col span="24"> <Footer /></el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style scoped>
   .layout-blog-container{
     /* 固定背景,不自动平铺  */
     background-repeat: no-repeat;
@@ -53,10 +53,14 @@ export default {
     scroll-behavior: smooth; /*平滑滚动*/
     box-sizing: border-box;
     min-width: 200px;
-    max-width: 1400px;
-    min-height: 100%;
+    max-width: 1440px;
+    /*min-height: 100%;*/
     margin: 0 auto;
     padding: 45px;
+  }
+  .blog-main{
+    max-width: 100%;
+    height: auto;
   }
 
   .breadcrumb {
@@ -65,8 +69,7 @@ export default {
 
   .blog-header {
     font-family: Impact, Charcoal, sans-serif;
-    font-size: 60px;
-    min-width: 400px;
+    font-size: 4em;
     margin: auto;
     color: #ffff;
   }
@@ -78,8 +81,9 @@ export default {
   }
 
   @media (max-width: 1440px) {
-    .blog-main {
+    .blog-container {
       padding: 5px;
+      width: 100%;
     }
 
     .breadcrumb {
