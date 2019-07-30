@@ -15,39 +15,14 @@
       @row-click="editBlog"
       @selection-change="selectItem"
     >
-      <el-table-column
-        type="selection"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="id"
-        label="ID"
-        min-width="35"
-      />
-      <el-table-column
-        prop="title"
-        label="标题"
-        min-width="80"
-      />
-      <el-table-column
-        prop="content"
-        label="内容"
-        :formatter="subString"
-        min-width="120"
-      />
-      <el-table-column
-        prop="createTime"
-        :formatter="parseTime"
-        label="创建时间"
-        min-width="100"
-      />
-      <el-table-column
-        prop="modifyTime"
-        :formatter="parseTime"
-        label="修改时间"
-        min-width="100"
-      />
+      <el-table-column type="selection" show-overflow-tooltip />
+      <el-table-column prop="id" label="ID" min-width="35" />
+      <el-table-column prop="title" label="标题" min-width="80" />
+      <el-table-column prop="content" label="内容" :formatter="subString" min-width="120" />
+      <el-table-column prop="createTime" :formatter="parseTime" label="创建时间" min-width="100" />
+      <el-table-column prop="modifyTime" :formatter="parseTime" label="修改时间" min-width="100" />
     </el-table>
+    <el-pagination background layout="prev, pager, next" :total="total" @current-change="pageChange" />
   </div>
 </template>
 
@@ -93,9 +68,12 @@ export default {
         return '-'
       }
     },
-    fetchData() {
+    pageChange(page) {
+      this.fetchData(page)
+    },
+    fetchData(page) {
       this.listLoading = true
-      getList(this.pageable.page, this.pageable.max).then(({ data }) => {
+      getList(page || 1, this.pageable.max).then(({ data }) => {
         this.content = data.content
         this.totalPages = data.totalPages
         this.total = data.total
@@ -137,10 +115,11 @@ export default {
 </script>
 
 <style scoped>
-  .data-table{
+  .data-table {
     width: 100%;
   }
-  .btn-container{
+
+  .btn-container {
     padding-left: 15px;
     padding-bottom: 15px;
     padding-top: 10px;
