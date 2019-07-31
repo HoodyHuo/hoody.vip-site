@@ -30,14 +30,14 @@ class SeoService {
     String getSitemapXml() {
         def sw = new StringWriter()
         def urls = []
-        urls << this.getBlogUrls()
-        urls << getWelcome()
+        urls.addAll(this.getBlogUrls())
+        urls.addAll(getWelcome())
         /** 创建xml闭包*/
         def xml = {
             mkp.xmlDeclaration()
             urlset(xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9") {
                 /** 循环添加闭包子节点 */
-                urls.each { Map<String, String> item ->
+                urls.collect { item ->
                     url {
                         loc(item.loc)
                         /** 过滤信息,不存在则不添加 */
