@@ -49,17 +49,6 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/proxy'
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  // axios: {
-  //   proxy: true,
-  //   baseURL: process.env._ENV !== 'production' ? 'http://localhost:3000/api/' : 'http://api/',
-  //   debug: process.env._ENV !== 'production',
-  //   withCredentials: true
-  // },
-
   proxy: {
     '/api/': {
       target: process.env.NODE_ENV === 'production' ? 'http://114.55.171.14/api' : 'http://localhost:8080',
@@ -67,6 +56,10 @@ export default {
       pathRewrite: {
         '^/api/': process.env.NODE_ENV !== 'production' ? '' : '/api'
       },
+      secure: false
+    },
+    '/storage/': {
+      target: process.env.NODE_ENV === 'production' ? 'http://hoody.vip' : 'http://localhost:8080',
       secure: false
     }
   },
