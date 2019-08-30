@@ -75,6 +75,7 @@ export default {
   /*不限制图片大小，实现居中*/
   .img-view .img img {
     max-width: 100%;
+    max-height: 100%;
     top: 0;
     left: 0;
     right: 0;

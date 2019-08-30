@@ -7,7 +7,7 @@ Markdown 显示组件，传入content 作为prop 参数
 <template>
   <div>
     <div ref="md" class="markdown-body" v-html="htmlContent" />
-    <BigImage ref="img"/>
+    <BigImage ref="img" />
   </div>
 </template>
 

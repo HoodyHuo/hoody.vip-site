@@ -16,7 +16,7 @@
         </nuxt-link>
       </el-timeline-item>
     </el-timeline>
-    <div class="blog-search-none" v-show="blogs.length===0">Sorry 无相关内容</div>
+    <div v-show="blogs.length===0" class="blog-search-none">Sorry 无相关内容</div>
     <div class="load-btn-warpper">
       <nuxt-link v-show="page>1" :to="{path:`/blog/search/${query}/${(page-1)}`}">
         <el-button class="load-btn" type="success"> 上一页</el-button>

@@ -11,7 +11,7 @@
         <nuxt-link :to="'/blog/detail/'+blog.id" :alt="blog.title">
           <el-card class="card">
             <p class="title">{{ blog.title }}</p>
-            <p>{{ cutString(blog.content) }}</p>
+            <p class="previ">{{ cutString(blog.content) }}</p>
           </el-card>
         </nuxt-link>
       </el-timeline-item>
@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     cutString: function(str) {
-      return str.substring(0, 100)
+      return str.substring(0, 300) + '...'
     },
     parseTime: parseTime
   }

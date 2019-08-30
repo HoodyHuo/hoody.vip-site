@@ -1,6 +1,5 @@
 
 const { resolve } = require('path')
-console.dir(process.env.NODE_ENV === 'production')
 
 export default {
 

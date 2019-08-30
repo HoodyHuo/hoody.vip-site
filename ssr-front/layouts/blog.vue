@@ -1,21 +1,32 @@
 <template>
-  <div class="layout-blog-container" :style="{'background-image':`url(${backgroundImage})`}">
+  <div class="layout-blog-container">
+    <!--<img class="bulr" src="/intro-bg.jpg"/>-->
     <div class="blog-container">
       <el-row id="blog_header" class="blog-header">
         Hoody's Blog
       </el-row>
       <el-row class="blog-main">
         <el-row>
-          <el-col :lg="17" :xs="24"><Breadcrumb class="breadcrumb" /></el-col>
-          <el-col :lg="7" :xs="24"> <Search :text="searchText" /></el-col>
+          <el-col :lg="17" :xs="24">
+            <Breadcrumb class="breadcrumb" />
+          </el-col>
+          <el-col :lg="7" :xs="24">
+            <Search :text="searchText" />
+          </el-col>
         </el-row>
         <el-row>
-          <el-col span="24"><router-view /></el-col>
+          <el-col :span="24">
+            <router-view />
+          </el-col>
         </el-row>
       </el-row>
       <el-row>
-        <el-col span="24"><hr color="d3dce6"></el-col>
-        <el-col span="24"> <Footer /></el-col>
+        <el-col :span="24">
+          <hr color="d3dce6">
+        </el-col>
+        <el-col :span="24">
+          <Footer />
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -26,7 +37,6 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Footer from '@/components/Footer'
 import Search from '@/components/blog/Search'
 
-const backgroundImage = '/intro-bg.jpg'
 export default {
   name: 'BlogLayout',
   components: {
@@ -36,7 +46,6 @@ export default {
   },
   data() {
     return {
-      backgroundImage: backgroundImage,
       searchText: this.$route.params.query
     }
   }
@@ -44,8 +53,9 @@ export default {
 </script>
 
 <style scoped>
-  .layout-blog-container{
+  .layout-blog-container {
     /* 固定背景,不自动平铺  */
+    background-image: url('/intro-bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
@@ -58,7 +68,8 @@ export default {
     margin: 0 auto;
     padding: 45px;
   }
-  .blog-main{
+
+  .blog-main {
     max-width: 100%;
     height: auto;
   }

@@ -21,6 +21,9 @@
 
 .cl-wrapper .cl-link {
   cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: rgba(52, 73, 94, 0.5);
   font-size: 1em;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);

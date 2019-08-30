@@ -5,10 +5,10 @@
         <div class="title">{{ blog.title }}</div>
       </el-col>
       <el-col :sm="24" :lg="20">
-        <Markdown id="loading-animation" class="content" :content="blog.content" />
+        <Markdown id="loading-animation" ref="md" class="content" :content="blog.content" />
       </el-col>
       <el-col :span="4">
-        <div id="blog_catalog" class="catalog hidden-sm-and-down" />
+        <div id="blog_catalog" ref="catalog" class="catalog hidden-sm-and-down" />
       </el-col>
       <el-col :sm="24" :lg="20">
         <Copyright />
@@ -67,15 +67,25 @@ export default {
   },
   mounted() {
     this.createCatalog()
+    window.addEventListener('scroll', this.appScroll)
     this.getCommets()
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.appScroll)
   },
   methods: {
     createCatalog() {
-      new Catelog({
-        contentEl: 'loading-animation',
-        catalogEl: `blog_catalog`
-        // selector: ['h2', 'h3']
-      })
+      window.onScroll =
+          new Catelog({
+            contentEl: 'loading-animation',
+            catalogEl: `blog_catalog`,
+            selector: ['h1', 'h2', 'h3']
+          })
+    },
+    appScroll(e) {
+      const catelog = this.$refs.catalog
+      const md = this.$refs.md.$el
+      catelog.className = md.getBoundingClientRect().y >= 0 ? 'catalog hidden-sm-and-down' : 'catalog hidden-sm-and-down stacki'
     },
     refresh() {
       this.getCommets()
@@ -85,13 +95,6 @@ export default {
       const id = this.$route.params.id // 获取router url路径参数 id
       getCommets(id).then(res => {
         that.commentItems = res.data
-      })
-    },
-    getBlog() {
-      const that = this
-      const id = this.$route.params.id // 获取router url路径参数 id
-      getBlog(id).then(res => {
-        that.blog = res.data
       })
     }
   }
@@ -122,6 +125,7 @@ export default {
     background-color: rgba(245, 245, 245, 0.9);
     padding: 45px;
   }
+
   @media (max-width: 1440px) {
     .title {
       padding: 15px;
@@ -133,10 +137,14 @@ export default {
     background-color: rgba(245, 245, 245, 0.9);
     font-size: 1rem;
     font-weight: bolder;
-    position: fixed;
     transition: top .2s;
-    max-width: 20em;
-    min-height: 40em;
+    width: 20em;
+    /* height: 40em; */
+  }
+
+  .stacki {
+    position: fixed;
+    top: 0;
   }
 
   .reply-items {

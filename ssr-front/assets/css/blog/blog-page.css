@@ -2,12 +2,21 @@ a {
   text-decoration: none;
 }
 
+.card{
+  padding: 1em;
+  max-height: 350px;
+}
 .card:hover {
   cursor: pointer;
   background-color: #348d9d;
   color: #d3dce6;
 }
-
+.previ{
+  color: #757f8d;
+}
+.previ:hover{
+  color: #bdc6d0;
+}
 .content {
   width: 100%;
 }
@@ -31,7 +40,7 @@ a {
 .load-btn {
   background-color: #348d9d;
   border-color: #348d9d;
-  margin: 0 auto;
+  margin: 0 0.2em;
 }
 
 .currentPage {
@@ -40,7 +49,9 @@ a {
 
 .title {
   font-family: 幼圆;
-  font-size: large;
+  font-size: 2em;
+  font-weight:bold ;
+  padding-bottom: 0.5em;
 }
 
 .blog-search-none {

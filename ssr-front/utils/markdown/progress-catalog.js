@@ -231,7 +231,7 @@ export default function(opts) {
       for (let i = 0; i < tree.length; i++) {
         if (isEqual(tree[i].parent, _parent)) {
           hasChild = true
-          ul += `<li><div class='${Opt.linkClass} cl-level-${tree[i].level}' ${Opt.datasetName}='${tree[i].id}'>${tree[i].name}</div>`
+          ul += `<li><div title="${tree[i].name}" class='${Opt.linkClass} cl-level-${tree[i].level}' ${Opt.datasetName}='${tree[i].id}'>${tree[i].name}</div>`
           ul += generateHtmlTree(tree, tree[i])
           ul += '</li>'
         }

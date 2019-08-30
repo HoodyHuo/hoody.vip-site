@@ -12,7 +12,13 @@
 <script>
 export default {
   name: 'Search',
-  props: ['text'],
+  props: {
+    'text': {
+      type: String,
+      required: true,
+      default: ''
+    }
+  },
   data() {
     return {
       input: ''
