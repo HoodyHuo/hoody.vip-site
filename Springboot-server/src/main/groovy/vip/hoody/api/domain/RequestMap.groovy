@@ -17,11 +17,6 @@ class RequestMap {
 
     String url
 
-    @OneToOne
-    @JoinColumn(name = "action_id", referencedColumnName = "id", nullable = true)
-    Action action
-
-
 
     @Override
     public String toString() {
@@ -29,7 +24,6 @@ class RequestMap {
                 "id=" + id +
                 ", configAttribute='" + configAttribute + '\'' +
                 ", url='" + url + '\'' +
-                ", action=" + action.toString() +
                 '}';
     }
 }
