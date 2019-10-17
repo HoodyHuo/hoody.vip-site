@@ -1,5 +1,5 @@
-#使用node:8.16-alpine 作为基础进行构建
-FROM node:8.16-alpine 
+#使用node:10.16.3-alpine 作为基础进行构建
+FROM node:10.16.3-alpine
 
 #创建/app 目录作为部署目录,创建容器实例时,挂载此目录
 RUN mkdir -p /app
