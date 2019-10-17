@@ -1,8 +1,6 @@
-
 const { resolve } = require('path')
-
 export default {
-
+  mode: 'universal',
   server: {
     port: process.env.NODE_ENV === 'production' ? 80 : 80, // default: 3000
     host: '0.0.0.0', // default: localhost,
@@ -10,15 +8,19 @@ export default {
       total: true
     }
   },
-  // 通用头部信息
+  /*
+  ** Headers of the page
+  */
   head: {
+    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
-  },
-  mode: 'universal',
-  env: {
   },
   /*
   ** Customize the progress-bar color
@@ -37,7 +39,13 @@ export default {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/svg-icon'
-    // '@/plugins/axios'
+  ],
+  /*
+  ** Nuxt.js dev-modules
+  */
+  buildModules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module'
   ],
   /*
   ** Nuxt.js modules
@@ -66,15 +74,39 @@ export default {
     middleware: 'breadcrumb'
   },
   /*
+  ** Axios module configuration
+  ** See https://axios.nuxtjs.org/options
+  */
+  axios: {
+  },
+  /*
   ** Build configuration
   */
   build: {
     transpile: [/^element-ui/],
+    devtools: true,
+    // 增加打包分析
+    analyze: {
+      analyzerMode: 'static'
+    },
+    optimization: {
+      minimize: true,
+      moduleIds: 'named',
+      minimizer: [
+      // terser-webpack-plugin
+      // optimize-css-assets-webpack-plugin
+      ],
+      splitChunks: {
+        chunks: 'all',
+        automaticNameDelimiter: '.',
+        name: undefined,
+        cacheGroups: {}
+      }
+    },
+
     /*
     ** You can extend webpack config here
     */
-    loaders: [
-    ],
     extend(config, ctx) {
       // //   // 排除 nuxt 原配置的影响
       const svgRule = config.module.rules.find(rule => rule.test.test('.svg'))
