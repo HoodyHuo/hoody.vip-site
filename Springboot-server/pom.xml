@@ -101,6 +101,11 @@
             <artifactId>aliyun-java-sdk-ecs</artifactId>
             <version>4.16.11</version>
         </dependency>
+        <!--邮件-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

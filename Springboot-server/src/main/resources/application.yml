@@ -1,6 +1,20 @@
 logging:
   config: 'classpath:logback-spring.xml'
 spring:
+  mail:
+    from: 'xxx@163.com'
+    host: 'smtp.163.com'
+    username: 'xxx@163.com'
+    password: 'xxxxxxx'
+    default-encoding: utf-8
+    protocol: smtp
+    properties.mail.smtp:
+      port: 465 #465或者994
+      auth: true
+      starttls:
+        enable: true
+        required: true
+      ssl.enable: true
   profiles:
     active: dev #做profile 配置
   #    active: prod #做profile 配置
@@ -40,7 +54,7 @@ spring:
 shiro:
   #  loginUrl: /login
   #  successUrl: /main
-#  unauthorizedUrl: /error/403  #用户没有访问权限时跳转的请求路径
+  #  unauthorizedUrl: /error/403  #用户没有访问权限时跳转的请求路径
   web:
     enabled: true #启用或停用shiro 权限过滤
 platform:

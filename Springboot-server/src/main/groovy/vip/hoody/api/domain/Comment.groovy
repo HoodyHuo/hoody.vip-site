@@ -154,6 +154,7 @@ class Comment implements Serializable {
                 ", replyComments=" + replyComments +
                 ", replyTo=" + replyTo +
                 ", replyToUsername=" + replyToUsername +
+                ", content=" + content +
                 '}';
     }
 }

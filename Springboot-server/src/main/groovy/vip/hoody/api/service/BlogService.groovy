@@ -46,7 +46,7 @@ class BlogService {
             data = blogRepository.findAll(pageable)
         } else {
             Pageable pageable = new PageRequest(page, max, Sort.Direction.DESC, "create_Time")
-            data = blogRepository.findAllByQuery(query,pageable)
+            data = blogRepository.findAllByQuery(query, pageable)
         }
         return data
     }
@@ -123,6 +123,14 @@ class BlogService {
         return commentRepository.findAllbyReplyTo(commentId)
     }
 
+    /**
+     * 获取评论信息
+     * @param commentId
+     * @return
+     */
+    Comment getComment(Long commentId) {
+        return commentRepository.findById(commentId).get()
+    }
     /**
      *  保存图片文件
      * @param imageFile
