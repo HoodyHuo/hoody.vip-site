@@ -47,10 +47,10 @@ class BlogController {
             @RequestParam("page") Integer page,
             @RequestParam(value = "query", required = false) String query
     ) {
-        page = page == null ? 0 : page - 1 //JPA 分页从 0开始
-        max = max == null ? 5 : max
+        page = page == null || page < 1 ? 0 : page - 1 //JPA 分页从 0开始
+        max = max == null || max < 1 ? 5 : max
 
-        Page pageData = blogService.list(max, page,query)
+        Page pageData = blogService.list(max, page, query)
 
         return new ResponseData(
                 data: [
