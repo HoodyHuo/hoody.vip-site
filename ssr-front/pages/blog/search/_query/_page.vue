@@ -10,8 +10,9 @@
       >
         <nuxt-link :to="'/blog/detail/'+blog.id" :alt="blog.title">
           <el-card class="card">
-            <p class="title">{{ blog.title }}</p>
-            <p>{{ cutString(blog.content) }}</p>
+            <hits/>
+            <p class="title" v-html=" blog.title" />
+            <p v-html=" cutString(blog.content)" />
           </el-card>
         </nuxt-link>
       </el-timeline-item>
@@ -67,7 +68,7 @@ export default {
   },
   methods: {
     cutString: function(str) {
-      return str.substring(0, 100)
+      return str.substring(0, 300)
     },
     parseTime: parseTime
   }
@@ -76,4 +77,7 @@ export default {
 
 <style scoped>
   @import "@/assets/css/blog/blog-page";
+  >>> hits {
+    color: red;
+  }
 </style>

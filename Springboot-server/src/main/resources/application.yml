@@ -1,6 +1,12 @@
 logging:
   config: 'classpath:logback-spring.xml'
 spring:
+  data:
+    elasticsearch:
+      cluster-name: esName         #es库名称
+      cluster-nodes: localhost:9300     #es服务器地址:端口
+      repositories:
+        enabled: true            #启用es Repositories
   mail:
     from: 'xxx@163.com'
     host: 'smtp.163.com'

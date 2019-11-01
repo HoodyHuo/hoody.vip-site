@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 import vip.hoody.api.domain.Blog
 import vip.hoody.api.domain.Comment
+import vip.hoody.api.elasticsearch.EsBlog
 import vip.hoody.api.repository.BlogRepository
 import vip.hoody.api.repository.CommentRepository
 import vip.hoody.api.util.MimeTypeUtil
@@ -25,11 +26,14 @@ class BlogService {
 
     CommentRepository commentRepository
 
+    EsBlogService esBlogService
+
     @Autowired
-    BlogService(StorageService storageService, BlogRepository blogRepository, CommentRepository commentRepository) {
+    BlogService(StorageService storageService, EsBlogService esBlogService, BlogRepository blogRepository, CommentRepository commentRepository) {
         this.storageService = storageService
         this.blogRepository = blogRepository
         this.commentRepository = commentRepository
+        this.esBlogService = esBlogService
     }
 
     /**
@@ -45,8 +49,7 @@ class BlogService {
             Pageable pageable = new PageRequest(page, max, Sort.Direction.DESC, "createTime")
             data = blogRepository.findAll(pageable)
         } else {
-            Pageable pageable = new PageRequest(page, max, Sort.Direction.DESC, "create_Time")
-            data = blogRepository.findAllByQuery(query, pageable)
+            data = esBlogService.searchHighlight(max, page, query)
         }
         return data
     }
@@ -71,6 +74,7 @@ class BlogService {
         ids.each { Long id ->
             blogRepository.deleteById(id)
             commentRepository.deleteByBlogId(id)
+            esBlogService.delete(id)
         }
     }
 
@@ -87,6 +91,7 @@ class BlogService {
                 blog.createTime = sotrageBlog.createTime
             }
         }
+        esBlogService.save(EsBlog.convert(blog))
         return blogRepository.save(blog)
     }
 
