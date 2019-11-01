@@ -7,3 +7,6 @@
 *.njsproj
 *.sln
 *.iml
+vip-hoody-site.sql
+nginx.conf
+TodoList.md
