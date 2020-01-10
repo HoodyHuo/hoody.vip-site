@@ -3,14 +3,7 @@ package vip.hoody.api.domain
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.EntityListeners
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.Table
-import javax.persistence.Transient
+import javax.persistence.*
 
 @Entity
 @Table(name = 'comment')
@@ -26,7 +19,7 @@ class Comment implements Serializable {
     private Long id
 
     @Column(name = 'blog_id')
-    private Long blogId
+    private String blogId
 
     /** 评论人称呼*/
     @Column(name = 'name')
@@ -86,11 +79,11 @@ class Comment implements Serializable {
         this.replyComments = replyComments
     }
 
-    Long getBlogId() {
+    String getBlogId() {
         return blogId
     }
 
-    void setBlogId(Long blogId) {
+    void setBlogId(String blogId) {
         this.blogId = blogId
     }
 

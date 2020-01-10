@@ -5,14 +5,7 @@ import io.swagger.annotations.ApiImplicitParams
 import org.apache.shiro.authz.annotation.RequiresPermissions
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import vip.hoody.api.domain.Blog
 import vip.hoody.api.domain.Comment
@@ -70,7 +63,7 @@ class BlogController {
 //    @ApiImplicitParam(name = 'blog', dataTypeClass = Blog.class, required = true)
     @RequestMapping(value = "delete", method = RequestMethod.POST)
     ResponseData deleteBlog(@RequestBody Map dataMap) {
-        List<Long> ids = dataMap.ids
+        List<String> ids = dataMap.ids
 //        if(ids == null){
 //            return  new ResponseData(code: 20001,"id 数组为空")
 //        }
@@ -84,7 +77,7 @@ class BlogController {
      * @return
      */
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
-    ResponseData getDetail(@PathVariable('id') Long id) {
+    ResponseData getDetail(@PathVariable('id') String id) {
         Blog blog = blogService.getDetail(id)
         if (blog == null) {
             return new ResponseData(code: 40400, msg: "")
@@ -137,7 +130,7 @@ class BlogController {
      * @return
      */
     @RequestMapping(value = "comments/list/{id}", method = RequestMethod.GET)
-    ResponseData getComments(@PathVariable("id") Long blogId) {
+    ResponseData getComments(@PathVariable("id") String blogId) {
         if (blogId == null) {
             return new ResponseData(code: 40001, msg: "缺少参数")
         }

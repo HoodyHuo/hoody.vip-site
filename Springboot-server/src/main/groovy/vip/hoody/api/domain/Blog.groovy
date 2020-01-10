@@ -1,5 +1,6 @@
 package vip.hoody.api.domain
 
+import org.hibernate.annotations.GenericGenerator
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -10,20 +11,21 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = 'blog')
 @EntityListeners(AuditingEntityListener.class)
-class Blog implements Serializable  {
+class Blog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name='id')
-    private Long id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @Column(name = 'id')
+    private String id
 
     @NotNull
-    @Column(name='title')
+    @Column(name = 'title')
     private String title
 
     @NotNull
-    @Column(name='content')
+    @Column(name = 'content')
     private String content
 
     @CreatedDate
@@ -49,11 +51,11 @@ class Blog implements Serializable  {
                 '}';
     }
 
-    Long getId() {
+    String getId() {
         return id
     }
 
-    void setId(Long id) {
+    void setId(String id) {
         this.id = id
     }
 

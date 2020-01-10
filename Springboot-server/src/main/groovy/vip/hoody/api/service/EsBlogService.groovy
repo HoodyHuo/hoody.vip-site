@@ -2,7 +2,6 @@ package vip.hoody.api.service
 
 import org.elasticsearch.index.query.QueryStringQueryBuilder
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder
-import org.elasticsearch.search.sort.SortBuilder
 import org.elasticsearch.search.sort.SortBuilders
 import org.elasticsearch.search.sort.SortOrder
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,8 +28,8 @@ class EsBlogService {
         esBlogDao.save(blog)
     }
 
-    public void delete(Long id) {
-        esBlogDao.deleteById(id.toString())
+    public void delete(String id) {
+        esBlogDao.deleteById(id)
     }
 
     public List<EsBlog> search(String str) {

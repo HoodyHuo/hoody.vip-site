@@ -59,7 +59,7 @@ class BlogService {
      * @param id
      * @return
      */
-    Blog getDetail(Long id) {
+    Blog getDetail(String id) {
         Optional<Blog> blog = blogRepository.findById(id)
         return blog.isPresent() ? blog.get() : null
 
@@ -70,8 +70,8 @@ class BlogService {
      * @param ids 需要删除的博客ID List
      */
     @Modifying
-    void delete(List<Long> ids) {
-        ids.each { Long id ->
+    void delete(List<String> ids) {
+        ids.each { String id ->
             blogRepository.deleteById(id)
             commentRepository.deleteByBlogId(id)
             esBlogService.delete(id)
@@ -100,7 +100,7 @@ class BlogService {
      * @param blogId
      * @return
      */
-    List<Comment> getComments(Long blogId) {
+    List<Comment> getComments(String blogId) {
         List<Comment> list = commentRepository.findAllbyBlogId(blogId)
         list.each { Comment comment ->
             comment.replyComments = commentRepository.findAllbyReplyTo(comment.id)

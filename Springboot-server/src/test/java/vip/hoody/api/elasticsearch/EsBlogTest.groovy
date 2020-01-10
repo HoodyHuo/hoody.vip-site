@@ -28,7 +28,6 @@ class EsBlogTest {
     @Test
     public void saveTest() {
         Blog blog = new Blog()
-        blog.id = 12345L
         blog.title = "这是222标题"
         blog.content = "这是一个，全兴的内容"
         blog.createTime = new Date()
@@ -37,12 +36,11 @@ class EsBlogTest {
         service.save(esBlog)
 
         Blog blog2 = new Blog()
-        blog2.id = 23L
         blog2.title = "这是大姐夫题"
         blog2.content = "这是一个，水电是打发斯蒂芬费"
         blog2.createTime = new Date()
 
-        EsBlog esBlog2 = EsBlog.convert(blog2)
+//        EsBlog esBlog2 = EsBlog.convert(blog2)
         service.save(esBlog2)
     }
 
