@@ -58,15 +58,14 @@ export default {
   ],
   proxy: {
     '/api/': {
-      target: process.env.NODE_ENV === 'production' ? 'http://114.55.171.14/api' : 'http://localhost:8080',
-      // target: 'http://localhost:8080',
+      target: process.env.NODE_ENV === 'production' ? 'http://xxx.xx.xx.xx/api' : 'http://localhost:8080',
       pathRewrite: {
         '^/api/': process.env.NODE_ENV !== 'production' ? '' : '/api'
       },
       secure: false
     },
     '/storage/': {
-      target: process.env.NODE_ENV === 'production' ? 'http://hoody.vip' : 'http://localhost:8080',
+      target: process.env.NODE_ENV === 'production' ? 'http://xxx.xx.xx.xx' : 'http://localhost:8080',
       secure: false
     }
   },

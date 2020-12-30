@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import Breadcrumb from '@/components/Breadcrumb'
-import Footer from '@/components/Footer'
-import Search from '@/components/blog/Search'
+import Breadcrumb from '../components/Breadcrumb'
+import Footer from '../components/Footer'
+import Search from '../components/blog/Search'
 
 export default {
   name: 'BlogLayout',
